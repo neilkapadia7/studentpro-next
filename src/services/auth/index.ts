@@ -12,6 +12,10 @@ interface registerParams {
     password: String
 }
 
+async function getLoggedInUser() {
+    axios.get(`${API_URL}api/auth`);
+}
+
 async function login(params:loginParams) {
     axios.post(`${API_URL}api/auth/login`, params);
 }
@@ -25,7 +29,10 @@ async function changePassword(params:loginParams) {
 }
 
 const authService = {
-
+    getLoggedInUser,
+    login,
+    signup,
+    changePassword
 };
 
 export default authService;
