@@ -5,6 +5,7 @@ import "./globals.css";
 import Navbar from "@/components/layouts/navbar";
 import { useState } from "react";
 import { StoreProvider } from "@/store/StoreProvider";
+import { Toaster } from "@/components/ui/toaster"
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,6 +32,7 @@ export default function RootLayout({
         <body className={inter.className}>
         {/* <Navbar auth={isAuthenticated} logout={logout} /> */}
           {children}
+        <Toaster />
         </body>
       </html>
     </StoreProvider>

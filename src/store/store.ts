@@ -1,4 +1,4 @@
-import { configureStore as createStore } from '@reduxjs/toolkit';
+import { configureStore as createStore, combineReducers } from '@reduxjs/toolkit';
 
 
 // middlewares
@@ -7,15 +7,12 @@ import createSagaMiddleware from 'redux-saga';
 // Import custom components
 import reducers from '../reducers';
 import rootSaga from '../sagas';
-import thunk from 'redux-thunk';
+// import thunk from 'redux-thunk';
 
 const sagaMiddleware = createSagaMiddleware();
 const initialState = {};
 
-/**
- * Create a Redux store that holds the app state.
- */
-let middlewares = [sagaMiddleware, thunk];
+// let middlewares = [sagaMiddleware, thunk];
 
 // add logger only in development
 if (process.env.NODE_ENV === `development`) {
@@ -56,3 +53,7 @@ sagaMiddleware.run(rootSaga);
 
 
 export default store ;
+
+// Type for using useSelector hook
+const rootReducer = combineReducers({})
+export type RootState = ReturnType<typeof rootReducer>

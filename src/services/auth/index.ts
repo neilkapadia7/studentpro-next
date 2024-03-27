@@ -1,5 +1,5 @@
 import axios from 'axios';
-import API_URL from "../../constants/index";
+import {API_URL} from "../../constants/index";
 
 interface loginParams {
     email: String,
@@ -12,20 +12,26 @@ interface registerParams {
     password: String
 }
 
-async function getLoggedInUser() {
-    axios.get(`${API_URL}api/auth`);
+export async function getLoggedInUser() {
+    return axios.get(`${API_URL}api/auth`);
 }
 
-async function login(params:loginParams) {
-    axios.post(`${API_URL}api/auth/login`, params);
+export async function login(params:loginParams) {
+    return axios.post(`${API_URL}api/auth/login`, params)
+        .then(res =>  res)
+        .catch(err => err.response);
 }
 
-async function signup(params:registerParams) {
-    axios.post(`${API_URL}api/auth/signup`, params);
+export async function signup(params:registerParams) {
+    return axios.post(`${API_URL}api/auth/signup`, params)
+        .then(res =>  res)
+        .catch(err => err.response);
 }
 
-async function changePassword(params:loginParams) {
-    axios.post(`${API_URL}api/auth/passwordChange`, params);
+export async function changePassword(params:loginParams) {
+    return axios.post(`${API_URL}api/auth/passwordChange`, params)
+        .then(res =>  res)
+        .catch(err => err.response);
 }
 
 const authService = {
@@ -35,4 +41,4 @@ const authService = {
     changePassword
 };
 
-export default authService;
+// export default authService;

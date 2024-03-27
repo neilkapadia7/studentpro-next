@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
+// Can Use This in future for smaller application
 export interface CounterState {
   value: number
 }

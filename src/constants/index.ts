@@ -23,14 +23,16 @@ axios.interceptors.response.use(
   }
 );
 
-let API_URL:String;
+let API_LINK:String;
 
 if(process.env.NEXT_APP_ENVIRONMENT == "production") {
-    API_URL = `${process.env.BACKEND_URL}`;
+    API_LINK = `${process.env.BACKEND_URL}`;
 }
 else {
-    API_URL = "http://localhost:3000/";
+    API_LINK = "http://localhost:3001/";
 
 }
 
-export default {API_URL};
+console.log("API_LINK ->", API_LINK);
+
+export const API_URL = API_LINK;

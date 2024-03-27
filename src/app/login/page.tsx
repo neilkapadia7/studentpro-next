@@ -2,14 +2,27 @@
 import {useState, useEffect, useRef, FormEvent} from 'react'
 import Image from "next/image";
 import BackgroundImage from "../../../public/pexels-mikhail-nilov-8297853.jpg";
+import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux'
+import { RootState } from '@/store/store';
+import { userSignIn, userSignUp } from '@/actions/reduxActions/auth';
+import { useToast } from "@/components/ui/use-toast"
+import { Button } from "@/components/ui/button"
+// import { Skeleton } from "@/components/ui/skeleton"
 
 export default function Login() {
     const [isLogin, setIsLogin] = useState(true);
     const [loading, setLoading] = useState(true);
 
     const nameRef = useRef<HTMLInputElement>(null);
+    const signUpEmailRef = useRef<HTMLInputElement>(null);
+    const signUpPasswordRef = useRef<HTMLInputElement>(null);
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
+
+    const dispatch = useDispatch();
+    const {toast} = useToast()
+    // const auth = useSelector((state: TypedUseSelectorHook<reducers>) => state.auth);
+    const auth = useSelector((state: RootState) => state.auth);
 
     useEffect(() => {
         let pageState = localStorage.getItem("isLogin");
@@ -24,30 +37,93 @@ export default function Login() {
         setLoading(false)
     }, []);
 
+    useEffect(() => {
+        toast({
+            title: isLogin ? "Login Error!" : "Registration Error!",
+            description: auth.authErrorMessage || "Please Try Again",
+            variant: "destructive"
+        });
+    }, [auth])
+
     function switchPage() {
         localStorage.setItem("isLogin", `${!isLogin}`);
         setIsLogin(!isLogin);
 
+        // Clear Form State
+        if(nameRef?.current) {
+            nameRef.current.value = ""
+        }
+        if(signUpEmailRef?.current) {
+            signUpEmailRef.current.value = "";
+        }
+        if(signUpPasswordRef?.current) {
+            signUpPasswordRef.current.value = "";
+        }
+        if(emailRef?.current) {
+            emailRef.current.value = "";
+        }
+        if(passwordRef?.current) {
+            passwordRef.current.value = "";
+        }
     }
 
     function submitAuthentication(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
         let name, email, password;
-        if(nameRef?.current) {
-            name = nameRef?.current.value;
-            nameRef.current.value = '';
+
+        if (isLogin) {
+            if(emailRef?.current) {
+                email = emailRef?.current.value;
+            }
+            if(passwordRef?.current) {
+                password = passwordRef?.current.value;
+            }
+
+            
+            if(!email || !password) {
+                toast({
+                    title: "Login Error!",
+                    description: "Please fill all details",
+                    variant: "destructive"
+                });
+                return;
+            }
+
+            dispatch(
+                userSignIn({
+                    email, 
+                    password
+                })
+            );
+        } else {
+            
+            if(nameRef?.current) {
+                name = nameRef?.current.value;
+            }
+            if(signUpEmailRef?.current) {
+                email = signUpEmailRef?.current.value;
+            }
+            if(signUpPasswordRef?.current) {
+                password = signUpPasswordRef?.current.value;
+            }
+
+            
+            if(!email || !password || !name) {
+                toast({
+                    title: "Login Error!",
+                    description: "Please fill all details",
+                    variant: "destructive"
+                });
+                return;
+            }
+
+            dispatch(
+                userSignUp({
+                    email, 
+                    password
+                })
+            );
         }
-        if(emailRef?.current) {
-            email = emailRef?.current.value;
-            emailRef.current.value = '';
-        }
-        if(passwordRef?.current) {
-            password = passwordRef?.current.value;
-            passwordRef.current.value = '';
-        }
-        console.log({
-            name, email, password
-        });
 
 
     }
@@ -57,6 +133,7 @@ export default function Login() {
         return (
             <div className="w-full h-full">
                 <h1 className="text-center font-bold">Loading...</h1>
+                {/* <Skeleton className="w-[100px] h-[20px] rounded-full" /> */}
             </div>
         )
     }
@@ -104,7 +181,7 @@ export default function Login() {
                                     <label className="text-start block text-sm font-medium leading-6 text-gray-900">Full Name</label>
                                     <div className="mt-2 justify-center">
                                         <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 w-full">
-                                            <input type="text" name="name" id="name" ref={nameRef} className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="John Doe" />
+                                            <input type="text" name="nameRef" id="name" ref={nameRef} className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="John Doe" />
                                         </div>
                                     </div>
                                 </div>
@@ -113,7 +190,7 @@ export default function Login() {
                                     <label className="text-start block text-sm font-medium leading-6 text-gray-900">Email</label>
                                     <div className="mt-2 justify-center">
                                         <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 w-full">
-                                            <input type="email" name="email" id="email" ref={emailRef} className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="john@example.com" />
+                                            <input type="email" name="signUpEmailRef" id="signUpEmailRef" ref={signUpEmailRef} className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="john@example.com" />
                                         </div>
                                     </div>
                                 </div>
@@ -122,7 +199,7 @@ export default function Login() {
                                     <label className="block text-sm font-medium leading-6 text-gray-900">Password</label>
                                     <div className="mt-2">
                                         <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 w-full">
-                                            <input type="password" name="password" id="password" ref={passwordRef} className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="*****" />
+                                            <input type="password" name="signUpPasswordRef" id="signUpPasswordRef" ref={signUpPasswordRef} className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="*****" />
                                         </div>
                                     </div>
                                 </div>
@@ -130,9 +207,10 @@ export default function Login() {
                         }
 
                             <div className="mt-8">
-                                <button type="submit" className="rounded-md px-10 py-3 bg-secondary text-sm font-semibold text-white shadow-sm 
+                                {/* <button type="submit" className="rounded-md px-10 py-3 bg-secondary text-sm font-semibold text-white shadow-sm 
                                     focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 
-                                ">Submit</button>
+                                ">Submit</button> */}
+                                <Button type="submit">Submit</Button>
                             </div>
                             
 
@@ -153,24 +231,5 @@ export default function Login() {
 
 
         </main>
-        // <figure className="bg-slate-100 rounded-xl p-8 dark:bg-slate-800 size-1/3" style={{margin: "auto"}}>
-        //     <div className="pt-6 md:p-8 text-center md:text-left space-y-4">
-        //     <blockquote>
-        //     <p className="text-lg font-medium">
-        //         “Tailwind CSS is the only framework that I've seen scale
-        //         on large teams. It’s easy to customize, adapts to any design,
-        //         and the build size is tiny.”
-        //     </p>
-        //     </blockquote>
-        //     <figcaption className="font-medium">
-        //     <div className="text-sky-500 dark:text-sky-400">
-        //         Sarah Dayan
-        //     </div>
-        //     <div className="text-slate-700 dark:text-slate-500">
-        //         Staff Engineer, Algolia
-        //     </div>
-        //     </figcaption>
-        // </div>
-        // </figure>
     )
 }
