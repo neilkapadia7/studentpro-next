@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layouts/navbar";
 import { useState } from "react";
+import { StoreProvider } from "@/store/StoreProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,11 +26,13 @@ export default function RootLayout({
   }
 
   return (
-    <html lang="en">
-      <body className={inter.className}>
-      {/* <Navbar auth={isAuthenticated} logout={logout} /> */}
-        {children}
-      </body>
-    </html>
+    <StoreProvider>
+      <html lang="en">
+        <body className={inter.className}>
+        {/* <Navbar auth={isAuthenticated} logout={logout} /> */}
+          {children}
+        </body>
+      </html>
+    </StoreProvider>
   );
 }
