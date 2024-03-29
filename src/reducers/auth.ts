@@ -145,6 +145,7 @@ import {
 
         case USER_LOGOUT:
             return {
+                ...state,
                 loggedIn: false,
             }
         case CLEAR_ERROR:

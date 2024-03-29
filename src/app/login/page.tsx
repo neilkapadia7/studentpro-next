@@ -2,11 +2,13 @@
 import {useState, useEffect, useRef, FormEvent} from 'react'
 import Image from "next/image";
 import BackgroundImage from "../../../public/pexels-mikhail-nilov-8297853.jpg";
-import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@/store/store';
 import { userSignIn, userSignUp } from '@/actions/reduxActions/auth';
 import { useToast } from "@/components/ui/use-toast"
 import { Button } from "@/components/ui/button"
+import { useRouter } from 'next/navigation'
+
 // import { Skeleton } from "@/components/ui/skeleton"
 
 export default function Login() {
@@ -23,6 +25,7 @@ export default function Login() {
     const {toast} = useToast()
     // const auth = useSelector((state: TypedUseSelectorHook<reducers>) => state.auth);
     const auth = useSelector((state: RootState) => state.auth);
+    const router = useRouter();
 
     useEffect(() => {
         let pageState = localStorage.getItem("isLogin");
@@ -41,7 +44,10 @@ export default function Login() {
         if(auth.isLoading) {
             setIsLogin(true);
         }
-    }, [auth.isLoading]);
+        if(auth.loggedIn) {
+            router.push("/dashboard");
+        }
+    }, [auth.isLoading, auth.loggedIn]);
 
     useEffect(() => {
         if(auth.authErrorMessage) {

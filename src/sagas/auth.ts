@@ -1,6 +1,5 @@
 // import { call, put, takeLatest, all, select, take } from 'redux-saga/effects';
 import * as Effects from "redux-saga/effects";
-// import { redirect } from 'next/navigation'
 
 const call: any = Effects.call;
 const put: any = Effects.put;
@@ -47,11 +46,10 @@ function* getUserDetailsSaga(param: any): Generator<any> {
     
     if (getUserData.status === 200) {
       yield put(authAction.getUserDetailsResult(getUserData.data.data));
-      // redirect('/dashboard');
     }
 
   } catch (error: any) {
-    
+    console.log("ERROR -> ", error);
     payload = {
       ...payload,
       message: error.message || error.response.message,
