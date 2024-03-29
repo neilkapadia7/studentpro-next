@@ -2,7 +2,7 @@ import axios from "axios";
 
 axios.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("utoken");
+    const token = localStorage.getItem("token");
     if (token) config.headers["Authorization"] = "Bearer " + token;
 
     config.headers["content-type"] = "application/json";
@@ -13,15 +13,15 @@ axios.interceptors.request.use(
   }
 );
 
-axios.interceptors.response.use(
-  (res) => res,
-  (err) => {
-    if (err.response.status === 401) {
-      localStorage.clear();
-    }
-    throw err;
-  }
-);
+// axios.interceptors.response.use(
+//   (res) => res,
+//   (err) => {
+//     if (err.response.status === 401) {
+//       localStorage.clear();
+//     }
+//     throw err;
+//   }
+// );
 
 let API_LINK:String;
 

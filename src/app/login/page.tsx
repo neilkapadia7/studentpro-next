@@ -38,12 +38,20 @@ export default function Login() {
     }, []);
 
     useEffect(() => {
-        toast({
-            title: isLogin ? "Login Error!" : "Registration Error!",
-            description: auth.authErrorMessage || "Please Try Again",
-            variant: "destructive"
-        });
-    }, [auth])
+        if(auth.isLoading) {
+            setIsLogin(true);
+        }
+    }, [auth.isLoading]);
+
+    useEffect(() => {
+        if(auth.authErrorMessage) {
+            toast({
+                title: isLogin ? "Login Error!" : "Registration Error!",
+                description: auth.authErrorMessage || "Please Try Again",
+                variant: "destructive"
+            });
+        }
+    }, [auth.authErrorMessage])
 
     function switchPage() {
         localStorage.setItem("isLogin", `${!isLogin}`);
@@ -119,6 +127,7 @@ export default function Login() {
 
             dispatch(
                 userSignUp({
+                    name,
                     email, 
                     password
                 })

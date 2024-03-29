@@ -1,18 +1,17 @@
-"use client"
-import type { Metadata } from "next";
+import type * as next from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/layouts/navbar";
-import { useState } from "react";
 import { StoreProvider } from "@/store/StoreProvider";
 import { Toaster } from "@/components/ui/toaster"
+import { CheckLoginUser } from "@/services/global/CheckLoginUser";
+import { Metadata } from "next";
 
 const inter = Inter({ subsets: ["latin"] });
 
-// export const metadata: Metadata = {
-//   title: "SchoolPro",
-//   description: "SchoolPro Management",
-// };
+export const metadata: Metadata = {
+  title: "SchoolPro",
+  description: "SchoolPro Management",
+};
 
 export default function RootLayout({
   children,
@@ -20,21 +19,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
 
-  const [isAuthenticated, setIsAuthenticated] = useState({isAuthenticated: false});
-
-  const logout = () => {
-    console.log("Logout");
-  }
-
   return (
     <StoreProvider>
-      <html lang="en">
-        <body className={inter.className}>
-        {/* <Navbar auth={isAuthenticated} logout={logout} /> */}
-          {children}
-        <Toaster />
-        </body>
-      </html>
+      <CheckLoginUser>
+        <html lang="en">
+          <body className={inter.className}>
+            {children}
+          <Toaster />
+          </body>
+        </html>
+      </CheckLoginUser>
     </StoreProvider>
   );
 }

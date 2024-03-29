@@ -1,5 +1,6 @@
 // import { call, put, takeLatest, all, select, take } from 'redux-saga/effects';
 import * as Effects from "redux-saga/effects";
+// import { redirect } from 'next/navigation'
 
 const call: any = Effects.call;
 const put: any = Effects.put;
@@ -31,24 +32,95 @@ type signIn = {
 //     message: String,
 // }
 
-function* userSignInSaga(param: signIn): Generator<any> {
-  const auth = yield select((state: { auth: object }) => state.auth);
+
+function* getUserDetailsSaga(param: any): Generator<any> {
+  console.log("SAGA TRIGGERED");
+  
+  // const auth = yield select((state: { auth: object }) => state.auth);
   let payload = {
     status: false,
     message: "Could not fetch data",
   };
   try {
-    console.log("Auth Saga Called -> ", param)
+    const getUserData:any = yield call(authService.getLoggedInUser);
+      
+    
+    if (getUserData.status === 200) {
+      yield put(authAction.getUserDetailsResult(getUserData.data.data));
+      // redirect('/dashboard');
+    }
+
+  } catch (error: any) {
+    
+    payload = {
+      ...payload,
+      message: error.message || error.response.message,
+    };
+    yield put(authAction.setError({...payload}));
+  }
+}
+
+function* userSignInSaga(param: signIn): Generator<any> {
+  // const auth = yield select((state: { auth: object }) => state.auth);
+  let payload = {
+    status: false,
+    message: "Could not fetch data",
+  };
+  try {
     const response:any = yield call(authService.login, param.payload);
+    
+    if (response.status === 200) {
+      // if (response.data.status === true) {
+        localStorage.setItem('token', response.data.token)
+        yield put(authAction.getUserDetails());
+        payload = {
+            status: true,
+            message: "Success",
+        };
+        yield put(authAction.userSignInResult({ ...payload, data: response.data }));
+
+        const getUserData:any = yield call(authService.getLoggedInUser);
+        yield put(authAction.getUserDetailsResult(getUserData.data.data));
+      // }
+    }
+
+    if (!payload.status) {
+      payload = {
+        ...payload,
+        message: response.data.message || response.message || "Server Error",
+      };
+      yield put(authAction.setError({ ...payload }));
+    }
+
+  } catch (error: any) {
+    console.log("ERROR -> ", error);
+    payload = {
+      ...payload,
+      message: error.message || error.response.message,
+    };
+    yield put(authAction.setError({...payload}));
+  }
+}
+
+function* userSignUpSaga(param: any): Generator<any> {
+  // const auth = yield select((state: { auth: object }) => state.auth);
+  let payload = {
+    status: false,
+    message: "Could not fetch data",
+  };
+  try {
+    console.log("SignUp Saga Called -> ", param)
+    const response:any = yield call(authService.signup, param.payload);
     if (response.status === 200) {
       if (response.data.status === true) {
+        console.log("GET DATA -> ", response.data.data);
         localStorage.setItem('token', response.data.data.token)
         // yield put(authAction.getUserDetails(response.data.data._id));
         payload = {
             status: true,
             message: "Success",
         };
-        yield put(authAction.userSignInResult({ ...payload, data: response.data.data }));
+        yield put(authAction.userSignUpResult({ ...payload, data: response.data.data }));
 
       }
     }
@@ -71,10 +143,6 @@ function* userSignInSaga(param: signIn): Generator<any> {
   }
 }
 
-// function* userSignUpSaga(param) {
-  
-// }
-
 // function* resetPasswordSaga(param) {
   
 // }
@@ -94,8 +162,10 @@ function* userSignInSaga(param: signIn): Generator<any> {
 
 export default function* actionWatcher() {
   yield all([
-    
+    takeLatest(authConst.GET_USER_DETAILS, getUserDetailsSaga),
     takeLatest(authConst.USER_SIGNIN, userSignInSaga),
+    takeLatest(authConst.USER_SIGNUP, userSignUpSaga),
+    
     // takeLatest(authConst.USER_SIGNIN, userSignInSaga),
   ]);
 }

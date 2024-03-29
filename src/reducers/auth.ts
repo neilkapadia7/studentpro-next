@@ -10,6 +10,7 @@ import {
     USER_DETAILS_RESULT,
     SET_PASSWORD,
     SET_PASSWORD_RESULT,
+    GET_USER_DETAILS,
     SUBMIT_USER_PROFILE_BASIC_DETAILS,
     SUBMIT_USER_PROFILE_BASIC_DETAILS_RESULT,
     // FORGOT_PASSWORD,
@@ -18,7 +19,8 @@ import {
 
     type action = {
         type: String,
-        payload: any
+        payload: any,
+        message: String
     }
   
   const initialState = {
@@ -30,7 +32,7 @@ import {
     id: "",
     email: "",
     mobile: "",
-    fullname: "",
+    name: "",
     isPremiumUser: false,
     referralCode: "",
 	accessType: "",
@@ -39,6 +41,7 @@ import {
 	isAdminUser: false,
 	referredBy: null,
 	expiryDate: null,
+    token: "",
   };
   
   const authReducer = (state = initialState, action: action) => {
@@ -46,6 +49,11 @@ import {
         case USER_SIGNIN:
             return {
                 ...state,
+                isLoading: true,
+                isError: false,
+            }
+        case GET_USER_DETAILS:
+            return {
                 isLoading: true,
                 isError: false,
             }
@@ -58,14 +66,14 @@ import {
                 id: action.payload._id,
                 email: action.payload.email,
                 mobile: action.payload.mobile,
-                fullname: action.payload.fullname,
+                name: action.payload.name,
                 isPremiumUser: action.payload.isPremiumUser,
                 referralCode: action.payload.referralCode,
                 accessType: action.payload.accessType,
                 instituteDetails: action.payload.instituteDetails,
                 isActive: action.payload.isActive,
                 isAdminUser: action.payload.isAdminUser,
-                
+                token: action.payload.token,
             }
         case USER_SIGNUP:
             return {
@@ -82,14 +90,14 @@ import {
                 id: action.payload._id,
                 email: action.payload.email,
                 mobile: action.payload.mobile,
-                fullname: action.payload.fullname,
+                name: action.payload.name,
                 isPremiumUser: action.payload.isPremiumUser,
                 referralCode: action.payload.referralCode,
                 accessType: action.payload.accessType,
                 instituteDetails: action.payload.instituteDetails,
                 isActive: action.payload.isActive,
                 isAdminUser: action.payload.isAdminUser,
-                
+                token: action.payload.token,
             }
         case USER_DETAILS:
             return {
@@ -106,14 +114,13 @@ import {
                 id: action.payload._id,
                 email: action.payload.email,
                 mobile: action.payload.mobile,
-                fullname: action.payload.fullname,
+                name: action.payload.name,
                 isPremiumUser: action.payload.isPremiumUser,
                 referralCode: action.payload.referralCode,
                 accessType: action.payload.accessType,
                 instituteDetails: action.payload.instituteDetails,
                 isActive: action.payload.isActive,
                 isAdminUser: action.payload.isAdminUser,
-                
             }
         case AUTH_ERROR:
             return {
