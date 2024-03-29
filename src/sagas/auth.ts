@@ -107,20 +107,25 @@ function* userSignUpSaga(param: any): Generator<any> {
     message: "Could not fetch data",
   };
   try {
-    console.log("SignUp Saga Called -> ", param)
     const response:any = yield call(authService.signup, param.payload);
     if (response.status === 200) {
-      if (response.data.status === true) {
-        console.log("GET DATA -> ", response.data.data);
-        localStorage.setItem('token', response.data.data.token)
+      console.log("GET DATA -> ", response.data);
+        localStorage.setItem('token', response.data.token)
         // yield put(authAction.getUserDetails(response.data.data._id));
         payload = {
             status: true,
             message: "Success",
         };
-        yield put(authAction.userSignUpResult({ ...payload, data: response.data.data }));
+        yield put(authAction.userSignUpResult({ ...payload, data: response.data }));
+        yield put(authAction.getUserDetails());
+        payload = {
+            status: true,
+            message: "Success",
+        };
 
-      }
+        const getUserData:any = yield call(authService.getLoggedInUser);
+        yield put(authAction.getUserDetailsResult(getUserData.data.data));
+
     }
 
     if (!payload.status) {

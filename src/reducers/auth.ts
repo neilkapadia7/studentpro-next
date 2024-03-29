@@ -60,19 +60,7 @@ import {
         case USER_SIGNIN_RESULT:
             return {
                 ...state,
-                isLoading: false,
                 loggedIn: true,
-                isFreeUser: action.payload.isFreeUser,
-                id: action.payload._id,
-                email: action.payload.email,
-                mobile: action.payload.mobile,
-                name: action.payload.name,
-                isPremiumUser: action.payload.isPremiumUser,
-                referralCode: action.payload.referralCode,
-                accessType: action.payload.accessType,
-                instituteDetails: action.payload.instituteDetails,
-                isActive: action.payload.isActive,
-                isAdminUser: action.payload.isAdminUser,
                 token: action.payload.token,
             }
         case USER_SIGNUP:
@@ -84,19 +72,7 @@ import {
         case USER_SIGNUP_RESULT:
             return {
                 ...state,
-                isLoading: false,
                 loggedIn: true,
-                isFreeUser: action.payload.isFreeUser,
-                id: action.payload._id,
-                email: action.payload.email,
-                mobile: action.payload.mobile,
-                name: action.payload.name,
-                isPremiumUser: action.payload.isPremiumUser,
-                referralCode: action.payload.referralCode,
-                accessType: action.payload.accessType,
-                instituteDetails: action.payload.instituteDetails,
-                isActive: action.payload.isActive,
-                isAdminUser: action.payload.isAdminUser,
                 token: action.payload.token,
             }
         case USER_DETAILS:

@@ -10,6 +10,7 @@ export default function dashboard () {
 
 
   const signOut = () => {
+    localStorage.removeItem("token");
     dispatch(logout());
     router.push("/login");
   }
