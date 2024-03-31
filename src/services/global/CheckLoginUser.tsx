@@ -12,7 +12,6 @@ export const CheckLoginUser = ({children}: { children: React.ReactNode}) => {
 
     useEffect(() => {
         if(localStorage.getItem('token')) {
-          console.log("DID ROOT TRIGGERED");
           dispatch(getUserDetailsTriggerSaga());
         }
     }, []);
