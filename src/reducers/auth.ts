@@ -42,6 +42,7 @@ import {
 	referredBy: null,
 	expiryDate: null,
     token: "",
+    isInstituteAccess: false,
   };
   
   const authReducer = (state = initialState, action: action) => {

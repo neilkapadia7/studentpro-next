@@ -1,4 +1,4 @@
-'use client'
+"use client"
 import React, { Fragment, useEffect, useState } from 'react';
 // import { useLocation } from 'react-router-dom';
 // import { useRouter } from 'next/navigation';
@@ -7,26 +7,40 @@ import Link from 'next/link'
 import Icon from '../../../public/next.svg';
 // import "../../meyers-institute/css/design.css";
 import "../../app/meyers-institute/css/design.css";
+import "../../app/styles/navbar.css"
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '@/actions/reduxActions/auth';
+import { RootState } from '@/store/store';
 
-interface NavbarProps {
-    auth: {isAuthenticated: boolean};
-    logout: Function;
-}
+// interface NavbarProps {
+//     auth: {isAuthenticated: boolean};
+//     logout: Function;
+// }
 
   
 
-export default function Navbar ({ auth: { isAuthenticated }, logout }: NavbarProps)  {
+// export default function Navbar ({ auth: { isAuthenticated }, logout }: NavbarProps)  {
+export default function Navbar ()  {
     const [isNabarActive, setIsNabarActive] = useState(false);
 	const [isMeyers, setIsMeyers] = useState(false);
+	const [isLogin, setIsLogin] = useState(false);
 	// const location = useLocation();
     const router = useRouter();
     const pathname = usePathname();
+	const dispatch = useDispatch();
+	const auth = useSelector((state: RootState) => state.auth);
 
 	useEffect(() => {
 		if(pathname == "/meyers-institute") {
 			setIsMeyers(true);
 		}
-	}, [router]);
+
+		if(pathname == "/login") {
+			setIsLogin(true);
+		} else {
+			if(isLogin) setIsLogin(false);
+		}
+	}, [pathname]);
 
 
 	const toggleClass = () => {
@@ -37,7 +51,10 @@ export default function Navbar ({ auth: { isAuthenticated }, logout }: NavbarPro
 		}
 	};
 	const Logout = () => {
-		logout();
+		localStorage.removeItem("token");
+		dispatch(logout());
+	    // router.push("/login");
+		// logout();
 	};
 
 	const authLinks = (
@@ -57,38 +74,57 @@ export default function Navbar ({ auth: { isAuthenticated }, logout }: NavbarPro
 		</Fragment>
 	);
 
-	const guestLinks = (
+	const links = (
 		<Fragment>
 			<input className="menu-btn" type="checkbox" id="menu-btn"/>
 			<label className="menu-icon" onClick={() => toggleClass()}><span className="navicon"></span></label>
 			<ul className={`menu ${isNabarActive && 'active-menu'}`}>
-				<li>
-					<a href='/#guest-home-sec1'>Home</a>
-				</li>
-				<li>
-					<a href='/#guest-home-sec2'>About</a>
-				</li>
-				<li>
-					<a href='/#guest-home-sec4'>Contact</a>
-				</li>
+				{!auth.loggedIn ? 
+					<>
+						<li>
+							<a href='/'>Home</a>
+						</li>
+						<li>
+							<a href='/dashboard'>About</a>
+						</li>
+						<li>
+							<a href='/'>Contact</a>
+						</li>
+						<li>
+							<Link href='/login'>Login / SignUp</Link>
+						</li>
+					</>
+				: 
+					<>
+						<li>
+							<a href='/'>Home</a>
+						</li>
+						<li>
+							<a href='/'>About</a>
+						</li>
+						<li>
+							<a href='/'>Contact</a>
+						</li>
+						<li>
+							<Link onClick={Logout} href="/login">Logout</Link>
+						</li>
+					</>
+				}
 			</ul>
-			{/* <li>
-				<Link href='/login'>Login</Link>
-			</li> */}
+			
 		</Fragment>
 	);
 
 	return (
 		<Fragment>
-			<header>
-				<div className='logo'>
-					{isMeyers ? <img src={Icon} /> : "Company Name" }
-				</div>
-				{/* <nav> */}
-					{guestLinks}
-					{/* <ul>{isAuthenticated ? authLinks : guestLinks}</ul> */}
-				{/* </nav> */}
-			</header>
+			{!isLogin && 
+				<header>
+					<div className='logo'>
+						{isMeyers ? <img src={Icon} /> : "SchoolPRO" }
+					</div>
+					{links}
+				</header>
+			}
 		</Fragment>
 	);
 }

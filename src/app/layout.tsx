@@ -6,6 +6,8 @@ import { Toaster } from "@/components/ui/toaster"
 import { CheckLoginUser } from "@/services/global/CheckLoginUser";
 import ProtectedRoute from "./ProtectedRoute";
 import { Metadata } from "next";
+// import NavbarShad from "@/components/layouts/NavbarShad";
+import Navbar from "@/components/layouts/navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,6 +28,7 @@ export default function RootLayout({
         <ProtectedRoute>
           <html lang="en">
             <body className={inter.className}>
+              <Navbar />
               {children}
             <Toaster />
             </body>
