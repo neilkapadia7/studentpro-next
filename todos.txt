@@ -1,3 +1,31 @@
 Set Global Loading State
 Create Navbar
 Create Dashboard
+
+Link Navbar to All the Pages
+
+After Login User Can Make Purchase of different Products
+Once Payment is Done User Gets Access to the SchoolPro and the UI/Layout Changes
+
+The user creates a Institute or chooses existing one and sends for approval to SchoolPro Admin.
+
+After Purchase and Approval - 
+
+User Can Add users based on the roles (Institute Admin can add Instructors)
+Institute Admin and Instructors can add Batches and Syllabus
+Institute Admin can create and Add Batch Admins
+
+Batch Admins Can only Manage the attendance,syallabus and live sessions of students in the batch that is assigned to the user
+Instructors can perform same tasks but for all batches.
+Institute Admin can perform all same tasks and also revoke access and create new users with access as well.
+
+Central Admin Can perform all the above tasks + also revoke access to Institute Admin and remove the institute as well.
+
+If no Approval - then refund will be processed
+
+
+
+Future Cases - 
+Users can create vouchers based on which new users can puchase products and the user who created the voucher will get 10% of the amount created as coins/tokens.
+The coins/tokens can be used to make further purchases or can be credited as money 
+To credit money the user will have to share the bank details.
