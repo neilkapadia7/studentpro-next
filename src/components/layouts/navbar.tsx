@@ -85,7 +85,7 @@ export default function Navbar ()  {
 							<a href='/'>Home</a>
 						</li>
 						<li>
-							<a href='/dashboard'>About</a>
+							<a href='/'>About</a>
 						</li>
 						<li>
 							<a href='/'>Contact</a>
@@ -94,7 +94,28 @@ export default function Navbar ()  {
 							<Link href='/login'>Login / SignUp</Link>
 						</li>
 					</>
-				: 
+				: auth.isAdminUser ?
+					<>
+						<li>
+							<a href='/'>Dashboard</a>
+						</li>
+						<li>
+							<a href='/users'>Users</a>
+						</li>
+						<li>
+							<a href='/institutes'>Institutes</a>
+						</li>
+						<li>
+							<Link href='/live-class'>All Students</Link>
+						</li>
+						<li>
+							<Link href='/live-class'>Live Classes</Link>
+						</li>
+						<li>
+							<Link href='/login'>Logout</Link>
+						</li>
+					</>
+				:
 					<>
 						<li>
 							<a href='/'>Home</a>
@@ -120,7 +141,7 @@ export default function Navbar ()  {
 			{!isLogin && 
 				<header>
 					<div className='logo'>
-						{isMeyers ? <img src={Icon} /> : "SchoolPRO" }
+						{isMeyers ? <img src={Icon} /> : "TestPRO" }
 					</div>
 					{links}
 				</header>

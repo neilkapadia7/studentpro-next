@@ -16,9 +16,8 @@ export default function dashboard () {
   }
 
   return (
-    <div className="w-full h-full align-middle text-center">
+    <div className="w-full h-full align-middle text-center pt-20">
       <h1>DASHBOARD</h1>
-      <button onClick={signOut}>Logout</button>
     </div>
   )
 }
