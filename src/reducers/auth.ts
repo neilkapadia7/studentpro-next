@@ -37,6 +37,7 @@ import {
     referralCode: "",
 	accessType: "",
 	instituteDetails: [],
+    instituteId: null,
 	isActive: true,
 	isAdminUser: false,
 	referredBy: null,

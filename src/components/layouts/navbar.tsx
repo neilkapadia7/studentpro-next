@@ -20,7 +20,7 @@ import { RootState } from '@/store/store';
   
 
 // export default function Navbar ({ auth: { isAuthenticated }, logout }: NavbarProps)  {
-export default function Navbar ()  {
+export default function Navbar ({children}: Readonly<{children: React.ReactNode}>)  {
     const [isNabarActive, setIsNabarActive] = useState(false);
 	const [isMeyers, setIsMeyers] = useState(false);
 	const [isLogin, setIsLogin] = useState(false);
@@ -118,7 +118,7 @@ export default function Navbar ()  {
 				:
 					<>
 						<li>
-							<Link href='/'>Home</Link>
+							<Link href='/home'>Home</Link>
 						</li>
 						<li>
 							<Link href='/'>About</Link>
@@ -144,8 +144,12 @@ export default function Navbar ()  {
 						{isMeyers ? <img src={Icon} /> : "TestPRO" }
 					</div>
 					{links}
-				</header>
+				</header>	
 			}
+			
+			<div className={isLogin ? "" : "pt-20"}>
+				{children}
+			</div>
 		</Fragment>
 	);
 }

@@ -28,8 +28,9 @@ export default function RootLayout({
         <ProtectedRoute>
           <html lang="en">
             <body className={inter.className}>
-              <Navbar />
-              {children}
+              <Navbar >
+                {children}
+              </Navbar>
             <Toaster />
             </body>
           </html>
