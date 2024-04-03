@@ -147,7 +147,7 @@ export default function Navbar ({children}: Readonly<{children: React.ReactNode}
 				</header>	
 			}
 			
-			<div className={isLogin ? "" : "pt-20"}>
+			<div className={isLogin ? "" : "pt-32 px-32"}>
 				{children}
 			</div>
 		</Fragment>

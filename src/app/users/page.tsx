@@ -106,7 +106,7 @@ export const page = () => {
 
     return (
         <>
-            <div className="mt-32 mx-20">
+            <div>
                 {loading 
                     ? <Loading /> 
                     :

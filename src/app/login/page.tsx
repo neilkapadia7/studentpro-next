@@ -1,5 +1,6 @@
 "use client";
 import {useState, useEffect, useRef, FormEvent} from 'react'
+import { ReloadIcon } from "@radix-ui/react-icons"
 import Image from "next/image";
 import BackgroundImage from "../../../public/pexels-mikhail-nilov-8297853.jpg";
 import { useDispatch, useSelector } from 'react-redux'
@@ -14,6 +15,7 @@ import { useRouter } from 'next/navigation'
 export default function Login() {
     const [isLogin, setIsLogin] = useState(true);
     const [loading, setLoading] = useState(true);
+    const [submitAction, setSubmitAction] = useState(false);
 
     const nameRef = useRef<HTMLInputElement>(null);
     const signUpEmailRef = useRef<HTMLInputElement>(null);
@@ -41,11 +43,16 @@ export default function Login() {
     }, []);
 
     useEffect(() => {
-        if(auth.isLoading) {
-            setIsLogin(true);
-        }
+        // if(auth.isLoading) {
+        //     setIsLogin(true);
+        // }
         if(auth.loggedIn) {
-            router.push("/dashboard");
+            if(auth.isAdminUser) {
+                router.push("/dashboard");
+            } else {
+                router.push("/home");
+            }
+            setSubmitAction(false);
         }
     }, [auth.isLoading, auth.loggedIn]);
 
@@ -56,6 +63,7 @@ export default function Login() {
                 description: auth.authErrorMessage || "Please Try Again",
                 variant: "destructive"
             });
+            setSubmitAction(false);
         }
     }, [auth.authErrorMessage])
 
@@ -83,6 +91,7 @@ export default function Login() {
 
     function submitAuthentication(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
+        setSubmitAction(true);
         let name, email, password;
 
         if (isLogin) {
@@ -139,8 +148,6 @@ export default function Login() {
                 })
             );
         }
-
-
     }
 
 
@@ -225,7 +232,10 @@ export default function Login() {
                                 {/* <button type="submit" className="rounded-md px-10 py-3 bg-secondary text-sm font-semibold text-white shadow-sm 
                                     focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 
                                 ">Submit</button> */}
-                                <Button type="submit">Submit</Button>
+                                <Button type="submit">
+                                    {submitAction && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
+                                    Submit
+                                </Button>
                             </div>
                             
 
