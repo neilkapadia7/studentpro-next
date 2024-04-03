@@ -17,6 +17,8 @@ import {
     // FORGOT_PASSWORD_RESULT,
 } from "../constants/actionTypes/auth";
 
+import * as ACTION from '../constants/actionTypes/institute';
+
     type action = {
         type: String,
         payload: any,
@@ -132,7 +134,13 @@ import {
             isError: false,
             authErrorMessage: "",
             };
-        
+        case ACTION.ADD_INSTITUTE_DETAILS:
+            return {
+                ...state,
+                isInstituteAccess: true,
+                instituteId: action.payload._id,
+                instituteDetails: action.payload
+            }
         
         default:
             return state;
