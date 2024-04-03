@@ -24,10 +24,10 @@ type updateUserAccess = {
 type updateInstitute = {
     instituteId: string, 
     image?: string, 
-    name: string,
+    name?: string,
     adminId?: string,
     instructorList?: Array<string>,
-    isActive: boolean,
+    isActive?: boolean,
 }
 
 export async function getAllUsers() {

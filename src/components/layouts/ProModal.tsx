@@ -31,7 +31,7 @@ export default function ProModal({title, subtitle, variant, row, loggedInUserId,
                     title: "Success",
                     description: toastMessage ? toastMessage : "Success"
                 });
-                refreshApi(); 
+                // refreshApi(); 
             }
                
         }
@@ -41,7 +41,7 @@ export default function ProModal({title, subtitle, variant, row, loggedInUserId,
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant={loggedInUserId == row._id || !row.isActive ? "secondary" : "destructive"}>
+                <Button variant={variant}>
                     {title}
                 </Button>
             </DialogTrigger>
@@ -51,7 +51,7 @@ export default function ProModal({title, subtitle, variant, row, loggedInUserId,
                 <DialogDescription>
                     {subtitle}
                     <br />
-                    <Button variant={variant} className="my-5" onClick={performAction}>Yes</Button>
+                    <Button variant="destructive" className="my-5" onClick={performAction}>Yes</Button>
                 </DialogDescription>
             </DialogHeader>
             </DialogContent>
