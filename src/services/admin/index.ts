@@ -17,7 +17,7 @@ interface addNewUser {
 
 type updateUserAccess = {
     userId: string, 
-    expiryDate: Date, 
+    expiryDate?: Date, 
     terminateAccess?: boolean,
 }
 
