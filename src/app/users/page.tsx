@@ -14,7 +14,6 @@ import UserModal from "./UserModal";
 export const page = () => {
     const auth = useSelector((state: RootState) => state.auth);
     const [loading, setloading] = useState(true);
-    const [displayModal, setdisplayModal] = useState(false);
     // const dispatch = useDispatch();
     const [users, setUsers] = useState([]);
     
@@ -99,7 +98,7 @@ export const page = () => {
           header: "Update Access",
           cell: ({ row }) => {
             return (
-                <UserModal modal={displayModal} getUserData={getUserData} loggedInUserId={auth.id}  row={row.original}/>
+                <UserModal getUserData={getUserData} loggedInUserId={auth.id}  row={row.original}/>
             )
           },
         }
@@ -112,7 +111,10 @@ export const page = () => {
                     ? <Loading /> 
                     :
                     <>
-                        <h1 className="text-3xl font-semibold">All Users</h1>
+                        <div className="flex justify-between">
+                            <h1 className="text-3xl font-semibold">All Users</h1>
+                            <Button >Add New User</Button>
+                        </div>
                         <DataTable columns={columns} data={users} />
                         
                     </>

@@ -66,6 +66,18 @@ export async function changePassword(params: {email: string, password: string}) 
         });
 }
 
+
+
+export async function getAllInstitute(params: {page?: number, search?: string, isCSV?: boolean}) {
+    return axios.post(`${API_URL}api/admin/getAllInstitute`, params)
+        .then(res => res)
+        .catch(err => {
+            console.log("Api Error in Admin service -> ", err);
+            return err;
+        });
+}
+
+
 export async function addInstitute(params: {image?: string, name: string, adminId: string}) {
     return axios.post(`${API_URL}api/admin/addInstitute`, params)
         .then(res => res)

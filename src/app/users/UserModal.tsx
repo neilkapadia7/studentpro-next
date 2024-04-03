@@ -41,7 +41,7 @@ export default function UserModal({modal, variant, row, loggedInUserId, getUserD
     
     
     return (
-        <Dialog modal={modal}>
+        <Dialog>
             <DialogTrigger asChild>
                 <Button variant={loggedInUserId == row._id || !row.isActive ? "secondary" : "destructive"}>
                     {loggedInUserId == row._id ? "Logged In User" : "Update Access"} 
