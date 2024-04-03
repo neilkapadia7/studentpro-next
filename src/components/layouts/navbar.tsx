@@ -53,26 +53,26 @@ export default function Navbar ()  {
 	const Logout = () => {
 		localStorage.removeItem("token");
 		dispatch(logout());
-	    // router.push("/login");
+	    router.push("/login");
 		// logout();
 	};
 
-	const authLinks = (
-		<Fragment>
-			<li>
-				<Link href='/home'>Home</Link>
-			</li>
-			<li>
-				<Link href='/about'>About</Link>
-			</li>
-			<li>
-				<Link href='/cart'>Cart</Link>
-			</li>
-			<li>
-				<a onClick={Logout}>Logout</a>
-			</li>
-		</Fragment>
-	);
+	// const authLinks = (
+	// 	<Fragment>
+	// 		<li>
+	// 			<Link href='/home'>Home</Link>
+	// 		</li>
+	// 		<li>
+	// 			<Link href='/about'>About</Link>
+	// 		</li>
+	// 		<li>
+	// 			<Link href='/cart'>Cart</Link>
+	// 		</li>
+	// 		<li>
+	// 			<a onClick={Logout}>Logout</a>
+	// 		</li>
+	// 	</Fragment>
+	// );
 
 	const links = (
 		<Fragment>
@@ -97,13 +97,13 @@ export default function Navbar ()  {
 				: auth.isAdminUser ?
 					<>
 						<li>
-							<a href='/'>Dashboard</a>
+							<Link href='/'>Dashboard</Link>
 						</li>
 						<li>
-							<a href='/users'>Users</a>
+							<Link href='/users'>Users</Link>
 						</li>
 						<li>
-							<a href='/institutes'>Institutes</a>
+							<Link href='/institutes'>Institutes</Link>
 						</li>
 						<li>
 							<Link href='/live-class'>All Students</Link>
@@ -112,22 +112,22 @@ export default function Navbar ()  {
 							<Link href='/live-class'>Live Classes</Link>
 						</li>
 						<li>
-							<Link href='/login'>Logout</Link>
+							<Link onClick={Logout} href='/login'>Logout</Link>
 						</li>
 					</>
 				:
 					<>
 						<li>
-							<a href='/'>Home</a>
+							<Link href='/'>Home</Link>
 						</li>
 						<li>
-							<a href='/'>About</a>
+							<Link href='/'>About</Link>
 						</li>
 						<li>
-							<a href='/'>Contact</a>
+							<Link href='/'>Contact</Link>
 						</li>
 						<li>
-							<Link onClick={Logout} href="/login">Logout</Link>
+							<Link onClick={Logout} href='/login'>Logout</Link>
 						</li>
 					</>
 				}
