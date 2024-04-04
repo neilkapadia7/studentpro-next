@@ -6,7 +6,7 @@ import Moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import {RootState} from "@/store/store";
 import { DataTable } from "@/components/layouts/DataTable";
-import {getAllUsers} from "../../services/admin/index"
+import {getAllUsers} from "../../../services/admin/index"
 import { useCallback, useEffect, useState } from "react";
 import Loading from "@/components/layouts/Loading";
 import UserModal from "./UserModal";

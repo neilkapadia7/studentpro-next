@@ -101,10 +101,10 @@ export default function Navbar ({children}: Readonly<{children: React.ReactNode}
 							<Link href='/'>Dashboard</Link>
 						</li>
 						<li>
-							<Link href='/users'>Users</Link>
+							<Link href='/admin/users'>Users</Link>
 						</li>
 						<li>
-							<Link href='/institutes'>Institutes</Link>
+							<Link href='/admin/institutes'>Institutes</Link>
 						</li>
 						<li>
 							<Link href='/live-class'>All Students</Link>

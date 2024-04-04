@@ -11,8 +11,8 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 
 
-export default function ProModal({title, subtitle, variant, row, loggedInUserId, triggerApi ,refreshApi, toastMessage} 
-        : {title: string, subtitle: string, variant?: any, row: any, loggedInUserId: string, 
+export default function ProModal({buttonTitle, title, subtitle, variant, row, loggedInUserId, triggerApi ,refreshApi, toastMessage} 
+        : {buttonTitle: string, title: string, subtitle: string, variant?: any, row: any, loggedInUserId: string, 
             triggerApi: Function, refreshApi: Function, toastMessage?: string}) {
     const {toast} = useToast();
 
@@ -24,16 +24,7 @@ export default function ProModal({title, subtitle, variant, row, loggedInUserId,
                 variant: "destructive"
             });
         } else {
-            let updateAccess = await triggerApi();
-
-            if(updateAccess.status == 200) {
-                toast({
-                    title: "Success",
-                    description: toastMessage ? toastMessage : "Success"
-                });
-                // refreshApi(); 
-            }
-               
+            await triggerApi(row._id);
         }
     }
     
@@ -42,12 +33,12 @@ export default function ProModal({title, subtitle, variant, row, loggedInUserId,
         <Dialog>
             <DialogTrigger asChild>
                 <Button variant={variant}>
-                    {title}
+                    {buttonTitle}
                 </Button>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
-                <DialogTitle>Are you absolutely sure?</DialogTitle>
+                <DialogTitle>{title}</DialogTitle>
                 <DialogDescription>
                     {subtitle}
                     <br />

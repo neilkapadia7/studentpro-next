@@ -18,8 +18,9 @@ export const Institute = () => {
     async function refreshInstitute() {
         setloading(true);
         let res = await getAllInstitute({});
-        if(res.data) {
-
+        if(res.status == 200) {
+          console.log("Res.data", res.data);
+          setInstitutes(res.data.data);
         }
         setloading(false);
     }
@@ -80,7 +81,7 @@ export const Institute = () => {
           accessorKey: "isActive",
           header: "Approved Status",
           cell: ({ row }) => {
-            return <div className="font-medium">{!row.getValue("institute") ? "-" : row.getValue("institute")}</div>
+            return <div className="font-medium">{row.original.isActive ? "Yes" : "No"}</div>
           },
         },
         {
@@ -90,9 +91,10 @@ export const Institute = () => {
             return (
                 // <Button>Test</Button>
                 <ProModal 
+                    buttonTitle={row.original.isActive ? "Make it Deactive" : "Make it Active"}
                     title={"Are you absolutely sure?"} 
                     subtitle={row.original.isActive ? "Do you want to deactivate institute?" : "Do you want to approve institute?"}
-                    variant={row.original.isActive ? "secondary" : "destructive"} 
+                    variant={row.original.isActive ? "destructive" : "secondary"} 
                     row={row.original}
                     loggedInUserId={auth._id} 
                     triggerApi={updateInstituteStatus}
