@@ -6,7 +6,7 @@ export async function POST(req: Request) {
   try {
 
     // detsrtucture todoTitle from the incoming request
-    const { name, instituteId, userId, isActive } = await req.json(); 
+    const { name, instituteId, userId } = await req.json(); 
 
     if (!name) {
       return new NextResponse("Name is required", { status: 400 });

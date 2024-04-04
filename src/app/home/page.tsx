@@ -69,10 +69,46 @@ const Home = () => {
             });
         }
         else {
-            toast({
-                title: "Success",
-                description: "Batch Added",
-            });
+            try {
+                const apiUrl = "/api/batch/get";
+          
+                const requestData = {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ 
+                        name: batchName,
+                        instituteId: auth.instituteId,
+                        userId: auth.id
+                    }),
+                };
+          
+                const response = await fetch(apiUrl, requestData);
+                console.log("response", response);
+
+                if (!response.ok) {
+                    toast({
+                        title: "Error",
+                        description: response.statusText,
+                        variant: "destructive"
+                    });
+                } else {
+                    toast({
+                        title: "Success",
+                        description: "Batch Added",
+                    });
+                }
+
+            }
+            catch (err) {
+                console.log(err);
+                toast({
+                    title: "Error",
+                    description: "Something went wrong!",
+                    variant: "destructive"
+                });
+            }
             // let res = await addInstitute({name: instituteName});
             // if(res.status == 200) {
             //     dispatch(updateInstituteDetails(res.data.data));
