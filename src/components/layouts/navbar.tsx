@@ -11,6 +11,7 @@ import "../../app/styles/navbar.css"
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '@/actions/reduxActions/auth';
 import { RootState } from '@/store/store';
+import Loading from './Loading';
 
 // interface NavbarProps {
 //     auth: {isAuthenticated: boolean};
@@ -146,10 +147,15 @@ export default function Navbar ({children}: Readonly<{children: React.ReactNode}
 					{links}
 				</header>	
 			}
+			{
+				auth.isLoading && localStorage.getItem("token") ?
+					<Loading classes="pt-32 px-32" />
+				: 
+				<div className={isLogin ? "" : "pt-32 px-32"}>
+					{children}
+				</div>
+			}
 			
-			<div className={isLogin ? "" : "pt-32 px-32"}>
-				{children}
-			</div>
 		</Fragment>
 	);
 }

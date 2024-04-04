@@ -1,8 +1,8 @@
 import { Skeleton } from "@/components/ui/skeleton"
 
-function Loading() {
+function Loading({classes}: {classes?: string}) {
     return (
-      <div className="flex flex-col space-y-3">
+      <div className={`flex flex-col space-y-3 ${classes}`}>
         <Skeleton className="h-[525px] w-[1050px] rounded-3xl" />
         <div className="space-y-2">
           <Skeleton className="h-4 w-[250px]" />

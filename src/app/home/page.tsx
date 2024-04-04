@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from "react-redux";
 import {RootState} from "@/store/store";
 import { Button } from '@/components/ui/button';
-import { useRouter } from 'next/navigation'
+// import { useRouter } from 'next/navigation'
 import {
     Dialog,
     DialogClose,
@@ -25,7 +25,7 @@ import { useDispatch } from 'react-redux';
 
 const Home = () => {
     const auth = useSelector((state: RootState) => state.auth);
-    const router = useRouter();
+    // const router = useRouter();
     const [domLoaded, setDomLoaded] = useState(false);
     const [instituteName, setinstituteName] = useState("");
     const dispatch = useDispatch();
@@ -45,7 +45,6 @@ const Home = () => {
         }
         else {
             let res = await addInstitute({name: instituteName});
-            console.log("RES -> ", res.response.data)
             if(res.status == 200) {
                 dispatch(updateInstituteDetails(res.data.data));
                 console.log(res.data.data);

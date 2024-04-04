@@ -38,7 +38,7 @@ import * as ACTION from '../constants/actionTypes/institute';
     isPremiumUser: false,
     referralCode: "",
 	accessType: "",
-	instituteDetails: [],
+	instituteDetails: {},
     instituteId: null,
 	isActive: true,
 	isAdminUser: false,
@@ -98,9 +98,11 @@ import * as ACTION from '../constants/actionTypes/institute';
                 isPremiumUser: action.payload.isPremiumUser,
                 referralCode: action.payload.referralCode,
                 accessType: action.payload.accessType,
-                instituteDetails: action.payload.instituteDetails,
                 isActive: action.payload.isActive,
                 isAdminUser: action.payload.isAdminUser,
+                isInstituteAccess: action.payload.instituteId ? true : false,
+                instituteId: action.payload.instituteId?._id,
+                instituteDetails: action.payload.instituteId || {}
             }
         case AUTH_ERROR:
             return {
@@ -126,7 +128,26 @@ import * as ACTION from '../constants/actionTypes/institute';
         case USER_LOGOUT:
             return {
                 ...state,
+                authErrorMessage: "", 
+                isError: false,
+                isLoading: false,
                 loggedIn: false,
+                isFreeUser: false,
+                id: "",
+                email: "",
+                mobile: "",
+                name: "",
+                isPremiumUser: false,
+                referralCode: "",
+                accessType: "",
+                instituteDetails: {},
+                instituteId: null,
+                isActive: true,
+                isAdminUser: false,
+                referredBy: null,
+                expiryDate: null,
+                token: "",
+                isInstituteAccess: false,
             }
         case CLEAR_ERROR:
             return {

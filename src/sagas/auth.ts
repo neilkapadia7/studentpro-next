@@ -33,7 +33,6 @@ type signIn = {
 
 
 function* getUserDetailsSaga(param: any): Generator<any> {
-  console.log("SAGA TRIGGERED");
   
   // const auth = yield select((state: { auth: object }) => state.auth);
   let payload = {

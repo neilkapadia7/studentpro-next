@@ -57,15 +57,16 @@ export default function Login() {
     }, [auth.isLoading, auth.loggedIn]);
 
     useEffect(() => {
-        if(auth.authErrorMessage) {
+        if(auth.isError && auth.authErrorMessage) {
             toast({
                 title: isLogin ? "Login Error!" : "Registration Error!",
                 description: auth.authErrorMessage || "Please Try Again",
                 variant: "destructive"
             });
+            
             setSubmitAction(false);
         }
-    }, [auth.authErrorMessage])
+    }, [auth.authErrorMessage, auth.isError])
 
     function switchPage() {
         localStorage.setItem("isLogin", `${!isLogin}`);
