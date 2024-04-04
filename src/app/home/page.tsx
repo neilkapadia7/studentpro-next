@@ -28,6 +28,7 @@ const Home = () => {
     // const router = useRouter();
     const [domLoaded, setDomLoaded] = useState(false);
     const [instituteName, setinstituteName] = useState("");
+    const [batchName, setbatchName] = useState("");
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -55,6 +56,34 @@ const Home = () => {
                     variant: "destructive"
                 });
             }
+        }
+    }
+    
+
+    async function saveBatch() {
+        if(batchName == "" || batchName.trim() == '' || batchName == null) {
+            toast({
+                title: "Error",
+                description: "Please Add Batch Name",
+                variant: "destructive"
+            });
+        }
+        else {
+            toast({
+                title: "Success",
+                description: "Batch Added",
+            });
+            // let res = await addInstitute({name: instituteName});
+            // if(res.status == 200) {
+            //     dispatch(updateInstituteDetails(res.data.data));
+            //     console.log(res.data.data);
+            // } else {
+                // toast({
+                //     title: "Error",
+                //     description: `${res.response.data.message}` || "Server Error",
+                //     variant: "destructive"
+                // });
+            // }
         }
     }
     
@@ -100,7 +129,32 @@ const Home = () => {
                             <h1 className="font-bold text-6xl text-center">
                                 Welcome, {auth.instituteDetails.name || auth.name}!
                             </h1>
-                            <Button className="mt-16 px-10 py-5 font-bold" variant="outline">Add Batch</Button>
+                            <Dialog>
+                                <DialogTrigger><Button className="mt-16 px-10 py-5 font-bold" variant="outline">Add Batch</Button></DialogTrigger>
+                                <DialogContent className="sm:max-w-[425px]">
+                                    <DialogHeader>
+                                        <DialogTitle>Add Batch</DialogTitle>
+                                        <DialogDescription>
+                                            Please add the batch name below.
+                                        </DialogDescription>
+                                    </DialogHeader>
+                                    <div className="grid gap-4 py-4">
+                                        <div className="grid grid-cols-4 items-center gap-4">
+                                            <Label htmlFor="name" className="text-right">
+                                            Batch Name
+                                            </Label>
+                                            <Input id="name" value={batchName} placeholder="STD-10 2020-21" className="col-span-3" onChange={(e) => setbatchName(e.target.value)}/>
+                                        </div>
+                                    </div>
+                                    <DialogFooter>
+                                        <DialogClose asChild>
+                                            <Button onClick={saveBatch}>
+                                                Save changes
+                                            </Button>
+                                        </ DialogClose>
+                                    </DialogFooter>
+                                </DialogContent>
+                            </Dialog>
                         </div>
                     </>
                 

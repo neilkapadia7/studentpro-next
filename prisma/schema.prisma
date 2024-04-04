@@ -1,0 +1,25 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+  // relationMode = "prisma"
+}
+
+model Todo {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  isCompleted    Boolean? @default(false)
+}
+
+model Batches {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  instituteId String @db.ObjectId
+  userId String @db.ObjectId
+  isActive Boolean
+}
