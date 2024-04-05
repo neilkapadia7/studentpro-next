@@ -23,3 +23,22 @@ model Batches {
   userId String @db.ObjectId
   isActive Boolean
 }
+
+model Users {
+  id  String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  email String
+  password String
+  accessType String
+  isAdminUser Boolean
+  instituteId String
+  isActive Boolean
+}
+
+model Students {
+  id  String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  email String
+  currentBatch String @db.ObjectId
+  isActive Boolean
+}

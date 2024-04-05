@@ -31,7 +31,10 @@ const DashboardCards = (
                     <p>20 Users</p>
                 </CardContent>
                 <CardFooter>
-                    <DashboardInputModal buttonTitle="Add User" title="Add User" subtitle="Add User to your institute with the selected role" label="Name" triggerApi={addUser} placeholder="John Doe"/>
+                    <div className="w-full">
+                        <DashboardInputModal buttonTitle="Add User" title="Add User" subtitle="Add User to your institute with the selected role" label="Name" triggerApi={addUser} placeholder="John Doe"/>
+                    </div>
+                    <p className="text-right w-full text-sm underline cursor-pointer">View All Students</p>
                 </CardFooter>
             </Card>
 
@@ -44,7 +47,10 @@ const DashboardCards = (
                     <p>{batches.length} Batches</p>
                 </CardContent>
                 <CardFooter>
-                    <DashboardInputModal buttonTitle="Add Batch" title="Add Batch" subtitle="Add a new Batch to your institute" label="Batch Name" triggerApi={addBatch} placeholder="STD-10 2020-21"/>
+                    <div className="w-full">
+                        <DashboardInputModal buttonTitle="Add Batch" title="Add Batch" subtitle="Add a new Batch to your institute" label="Batch Name" triggerApi={addBatch} placeholder="STD-10 2020-21"/>
+                    </div>
+                    <p className="text-right w-full text-sm underline cursor-pointer">View All Batches</p>
                 </CardFooter>
             </Card>
             
@@ -57,7 +63,10 @@ const DashboardCards = (
                     <p>200 Students</p>
                 </CardContent>
                 <CardFooter>
-                    <DashboardInputModal buttonTitle="Add Student" title="Add Student" subtitle="Add a new Student to a batch" label="Student Name" triggerApi={addUser} placeholder="John Doe"/>
+                    <div className="w-full">
+                        <DashboardInputModal buttonTitle="Add Student" title="Add Student" subtitle="Add a new Student to a batch" label="Student Name" triggerApi={addUser} placeholder="John Doe"/>
+                    </div>
+                    <p className="text-right w-full text-sm underline cursor-pointer">View All Students</p>
                 </CardFooter>
             </Card>
         </div>
@@ -72,7 +81,8 @@ const DashboardCards = (
                     <Progress value={49}/>
                 </CardContent>
                 <CardFooter>
-                    <p>49%</p>
+                    <p className="w-full">49%</p>
+                    <p className="text-right w-full text-sm underline cursor-pointer">View All Payment</p>
                 </CardFooter>
             </Card>
 
@@ -85,7 +95,8 @@ const DashboardCards = (
                     <Progress value={23}/>
                 </CardContent>
                 <CardFooter>
-                    <p>23%</p>
+                    <p className="w-full">49%</p>
+                    <p className="text-right w-full text-sm underline cursor-pointer">View Syllabus</p>
                 </CardFooter>
             </Card>
 
