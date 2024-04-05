@@ -16,27 +16,35 @@ interface addStudent {
     userId: String,
 }
 
-async function getAllStudents() {
-    axios.post(`${API_URL}api/student/get`);
+export async function getAllStudents() {
+    return axios.post(`${API_URL}api/student/get`)
+        .then(res => res)
+        .catch(err => err);
 }
 
-async function getByBatch(params:getByBatch) {
-    axios.post(`${API_URL}api/student/getByBatch`, params);
+export async function getByBatch(params:getByBatch) {
+    return axios.post(`${API_URL}api/student/getByBatch`, params)
+        .then(res => res)
+        .catch(err => err);
 }
 
-async function addStudent(params:addStudent) {
-    axios.post(`${API_URL}api/student/add`, params);
+export async function addStudent(params:addStudent) {
+    return axios.post(`${API_URL}api/student/add`, params)
+        .then(res => res)
+        .catch(err => err);
 }
 
-async function updateStudent(params:studentId) {
-    axios.post(`${API_URL}api/student/updateStudent`, params);
+export async function updateStudent(params:studentId) {
+    return axios.post(`${API_URL}api/student/updateStudent`, params)
+        .then(res => res)
+        .catch(err => err);
 }
 
-const authService = {
-    getAllStudents,
-    getByBatch,
-    addStudent,
-    updateStudent
-};
+// const authService = {
+//     getAllStudents,
+//     getByBatch,
+//     addStudent,
+//     updateStudent
+// };
 
-export default authService;
+// export default authService;

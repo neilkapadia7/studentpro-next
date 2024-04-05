@@ -12,8 +12,6 @@ import * as authAction from '../actions/reduxActions/auth';
 import * as authConst from '../constants/actionTypes/auth';
 import * as authService from '../services/auth';
 
-// let {login} = authService;
-// import {login} from '../services/auth';
 import Hashids from "hashids";
 
 
@@ -22,14 +20,7 @@ type signIn = {
         email: String,
         password: String,
     }
-    // USER_SIGNIN: String
 }
-
-// type signInSuccess = {
-//     status: boolean,
-//     data: Object,
-//     message: String,
-// }
 
 
 function* getUserDetailsSaga(param: any): Generator<any> {
@@ -167,7 +158,5 @@ export default function* actionWatcher() {
     takeLatest(authConst.GET_USER_DETAILS, getUserDetailsSaga),
     takeLatest(authConst.USER_SIGNIN, userSignInSaga),
     takeLatest(authConst.USER_SIGNUP, userSignUpSaga),
-    
-    // takeLatest(authConst.USER_SIGNIN, userSignInSaga),
   ]);
 }

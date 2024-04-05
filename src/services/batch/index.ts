@@ -25,31 +25,31 @@ interface updateBatch {
     coursePrice: Number,
 }
 
-async function getAllBatch() {
+export async function getAllBatch() {
     return axios.post(`${API_URL}api/batch/get`)
         .then(res => res)
         .catch(err => err);
 }
 
-async function getBatchById(batchId: String) {
+export async function getBatchById(batchId: String) {
     return axios.get(`${API_URL}api/batch/get/${batchId}`)
         .then(res => res)
         .catch(err => err);
 }
 
-async function addBatch(params:addbatch) {
+export async function addBatch(params:addbatch) {
     return axios.post(`${API_URL}api/batch/add`, params)
         .then(res => res)
         .catch(err => err);
 }
 
-async function updateBatch(params:updateBatch) {
+export async function updateBatch(params:updateBatch) {
     return axios.post(`${API_URL}api/batch/update`, params)
         .then(res => res)
         .catch(err => err);
 }
 
-async function getLiveClassesByBatch(batchId: String) {
+export async function getLiveClassesByBatch(batchId: String) {
     return axios.post(`${API_URL}api/batch/getLiveClasses`, batchId)
         .then(res => res)
         .catch(err => err);

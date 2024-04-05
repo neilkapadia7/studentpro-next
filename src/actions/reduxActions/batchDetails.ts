@@ -18,9 +18,34 @@ export const getAllBatch = () => {
     }
 }
 
-export const getAlllBatchResult = (payload: any) => {
+export const getAllBatchResult = (payload: any) => {
     return {
         type: batchDetails.GET_BATCH_RESULT,
+        payload: payload.data
+    }
+}
+
+export const addStudent = () => {
+    return {
+        type: batchDetails.ADD_STUDENTS_TRIGGER
+    }
+}
+
+export const addStudentResult = (payload: any) => {
+    return {
+        type: batchDetails.ADD_STUDENTS_RESULT,
+        payload: payload.data
+    }
+}
+export const addBatch = () => {
+    return {
+        type: batchDetails.ADD_BATCH_TRIGGER
+    }
+}
+
+export const addBatchResult = (payload: any) => {
+    return {
+        type: batchDetails.ADD_BATCH_RESULT,
         payload: payload.data
     }
 }
