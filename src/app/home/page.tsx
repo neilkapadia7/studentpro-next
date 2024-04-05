@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from 'react'
+import React, { SetStateAction, useEffect, useState } from 'react'
 import { useSelector } from "react-redux";
 import {RootState} from "@/store/store";
 import { Button } from '@/components/ui/button';
@@ -21,6 +21,8 @@ import { addInstitute, updateInstitute } from '@/services/institute';
 import { toast } from '@/components/ui/use-toast';
 import { updateInstituteDetails } from '@/actions/reduxActions/institute';
 import { useDispatch } from 'react-redux';
+import Loading from '@/components/layouts/Loading';
+import DashboardCards from '@/components/layouts/DashboardCards';
 
 
 const Home = () => {
@@ -28,12 +30,22 @@ const Home = () => {
     // const router = useRouter();
     const [domLoaded, setDomLoaded] = useState(false);
     const [instituteName, setinstituteName] = useState("");
-    const [batchName, setbatchName] = useState("");
+    let [batchName, setbatchName] = useState("");
+    const [allBatches, setAllBatches] = useState<Array<any>>([]);
+    const [loading, setLoading] = useState(true);
     const dispatch = useDispatch();
 
     useEffect(() => {
         setDomLoaded(true);
+        setLoading(false);
     }, []);
+
+    useEffect(() => {
+        if(auth.instituteId) {
+            getAllBatch();
+            setLoading(true);
+        }
+    }, [auth.loggedIn])
 
 
     async function saveInstitute() {
@@ -60,7 +72,13 @@ const Home = () => {
     }
     
 
-    async function saveBatch() {
+    async function saveBatch(name?: string) {
+        if(name) {
+            batchName = name;
+            setbatchName(name);
+        }
+
+
         if(batchName == "" || batchName.trim() == '' || batchName == null) {
             toast({
                 title: "Error",
@@ -85,20 +103,23 @@ const Home = () => {
                 };
           
                 const response = await fetch(apiUrl, requestData);
-                console.log("response", response);
+                let data = await response.json();
 
                 if (!response.ok) {
                     toast({
                         title: "Error",
-                        description: response.statusText,
+                        description: data.message || response.statusText,
                         variant: "destructive"
                     });
                 } else {
+                    let newBatch = [...allBatches, data];
+                    setAllBatches(newBatch);
                     toast({
                         title: "Success",
                         description: "Batch Added",
                     });
                 }
+                setbatchName("");
 
             }
             catch (err) {
@@ -109,23 +130,35 @@ const Home = () => {
                     variant: "destructive"
                 });
             }
-            // let res = await addInstitute({name: instituteName});
-            // if(res.status == 200) {
-            //     dispatch(updateInstituteDetails(res.data.data));
-            //     console.log(res.data.data);
-            // } else {
-                // toast({
-                //     title: "Error",
-                //     description: `${res.response.data.message}` || "Server Error",
-                //     variant: "destructive"
-                // });
-            // }
         }
     }
     
+
+    async function getAllBatch() {
+        try {
+            const apiUrl = `/api/batch/get?instituteId=${auth.instituteId}`;
+      
+            const requestData = {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            };
+      
+            const response = await fetch(apiUrl, requestData);
+            let batches =  await response.json();
+            setAllBatches(batches);
+            setLoading(false);
+        }
+        catch (err) {
+            console.log(err);
+        }
+    }
+
     return (
         <>
-        {domLoaded && 
+        {loading ? <Loading />
+        : domLoaded && !allBatches[0]  &&
             <div>
                 {!auth.instituteId ?
                     <div className="text-center justify-center pt-32">
@@ -184,7 +217,7 @@ const Home = () => {
                                     </div>
                                     <DialogFooter>
                                         <DialogClose asChild>
-                                            <Button onClick={saveBatch}>
+                                            <Button onClick={() => saveBatch()}>
                                                 Save changes
                                             </Button>
                                         </ DialogClose>
@@ -197,6 +230,15 @@ const Home = () => {
                 }
 
             </div>
+        }
+
+        {allBatches[0] && 
+            <>
+                <h1 className="font-bold text-3xl mb-10">
+                    Welcome, {auth.instituteDetails.name || auth.name}!
+                </h1>
+                <DashboardCards batches={allBatches} students={allBatches} users={allBatches} addBatch={saveBatch}/>
+            </>
         }
         </>
     )

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import API_URL from "../../constants/index";
+import {API_URL} from "../../constants/index";
 
 interface getBatchById {
     batchId: String,
@@ -26,23 +26,33 @@ interface updateBatch {
 }
 
 async function getAllBatch() {
-    axios.post(`${API_URL}api/batch/get`);
+    return axios.post(`${API_URL}api/batch/get`)
+        .then(res => res)
+        .catch(err => err);
 }
 
 async function getBatchById(batchId: String) {
-    axios.get(`${API_URL}api/batch/get/${batchId}`);
+    return axios.get(`${API_URL}api/batch/get/${batchId}`)
+        .then(res => res)
+        .catch(err => err);
 }
 
 async function addBatch(params:addbatch) {
-    axios.post(`${API_URL}api/batch/add`, params);
+    return axios.post(`${API_URL}api/batch/add`, params)
+        .then(res => res)
+        .catch(err => err);
 }
 
 async function updateBatch(params:updateBatch) {
-    axios.post(`${API_URL}api/batch/update`, params);
+    return axios.post(`${API_URL}api/batch/update`, params)
+        .then(res => res)
+        .catch(err => err);
 }
 
 async function getLiveClassesByBatch(batchId: String) {
-    axios.post(`${API_URL}api/batch/getLiveClasses`, batchId);
+    return axios.post(`${API_URL}api/batch/getLiveClasses`, batchId)
+        .then(res => res)
+        .catch(err => err);
 }
 
 const authService = {
