@@ -6,6 +6,7 @@ export async function POST(req: Request) {
   try {
     const { name, instituteId, userId } = await req.json(); 
 
+    
     let checkBatchExists = await db.batches.findFirst({
       where: {
         name: name,

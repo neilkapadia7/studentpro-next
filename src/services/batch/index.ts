@@ -10,10 +10,10 @@ interface studentId {
 }
 
 interface addbatch {
-    name: String,
-    startDate: Date,
-    endDate: Date,
-    coursePrice: Number,
+    name: string,
+    startDate?: Date,
+    endDate?: Date,
+    coursePrice?: Number,
 }
 
 interface updateBatch {

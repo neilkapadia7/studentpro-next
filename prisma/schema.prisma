@@ -16,7 +16,7 @@ model Todo {
   isCompleted    Boolean? @default(false)
 }
 
-model Batches {
+model batches {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   name String
   instituteId String @db.ObjectId
@@ -24,7 +24,7 @@ model Batches {
   isActive Boolean
 }
 
-model Users {
+model users {
   id  String @id @default(auto()) @map("_id") @db.ObjectId
   name String
   email String
@@ -35,7 +35,7 @@ model Users {
   isActive Boolean
 }
 
-model Students {
+model students {
   id  String @id @default(auto()) @map("_id") @db.ObjectId
   name String
   email String

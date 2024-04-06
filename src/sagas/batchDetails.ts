@@ -16,12 +16,13 @@ import * as studentService from '../services/students';
 import Hashids from "hashids";
 
 
-type signIn = {
-    payload: {
-        email: String,
-        password: String,
-    }
+type addbatch = {
+  name: string,
+  startDate?: Date,
+  endDate?: Date,
+  coursePrice?: Number,
 }
+
 
 
 function* getAllStudentsSaga(param: any): Generator<any> {
@@ -49,7 +50,6 @@ function* getAllStudentsSaga(param: any): Generator<any> {
 }
 
 function* getAllBatchSaga(param: any): Generator<any> {
-  
     let payload = {
       status: false,
       message: "Could not fetch data",
@@ -71,11 +71,37 @@ function* getAllBatchSaga(param: any): Generator<any> {
     }
   }
 
+function* addBatchSaga({params}: {params: addbatch}): Generator<any> {
+    let payload = {
+      status: false,
+      message: "Could not fetch data",
+    };
+    try {
+      const getUserData:any = yield call(batchService.addBatch, params);
+      
+      if (getUserData.status === 200) {
+        yield put(batchDetailsActions.addBatchResult(getUserData.data.data));
+      } else {
+        payload.message = getUserData.response.data.message || getUserData.message;
+        console.log("ERROR addBatchSaga -> ", getUserData.response.data.message);
+        yield put(batchDetailsActions.setError({...payload}));
+      }
+  
+    } catch (error: any) {
+      console.log("ERROR addBatchSaga -> ", error);
+      payload = {
+        ...payload,
+        message: error.message || error.response.message,
+      };
+      yield put(batchDetailsActions.setError({...payload}));
+    }
+  }
+
 export default function* actionWatcher() {
   yield all([
     takeLatest(constants.GET_STUDENTS_TRIGGER, getAllStudentsSaga),
     takeLatest(constants.GET_BATCH_TRIGGER, getAllBatchSaga),
     // takeLatest(constants.ADD_STUDENTS_TRIGGER, addStudentSaga),
-    // takeLatest(constants.ADD_BATCH_TRIGGER, addBatchSaga),
+    takeLatest(constants.ADD_BATCH_TRIGGER, addBatchSaga),
   ]);
 }

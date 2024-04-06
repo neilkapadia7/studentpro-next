@@ -8,6 +8,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import { Metadata } from "next";
 // import NavbarShad from "@/components/layouts/NavbarShad";
 import Navbar from "@/components/layouts/navbar";
+import ToastMessage from "@/components/layouts/toastMessage";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,10 +29,11 @@ export default function RootLayout({
         <ProtectedRoute>
           <html lang="en">
             <body className={inter.className}>
+              <Toaster />
+              <ToastMessage />
               <Navbar >
                 {children}
               </Navbar>
-            <Toaster />
             </body>
           </html>
         </ProtectedRoute>

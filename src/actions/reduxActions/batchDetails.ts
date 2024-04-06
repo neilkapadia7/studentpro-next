@@ -1,4 +1,13 @@
 import * as batchDetails from '../../constants/actionTypes/batchDetails';
+import store from '@/store/store';
+
+type addbatch = {
+    name: string,
+    startDate?: Date,
+    endDate?: Date,
+    coursePrice?: Number,
+  }
+  
 
 export const getAllStudents = () => {
     return {
@@ -21,7 +30,7 @@ export const getAllBatch = () => {
 export const getAllBatchResult = (payload: any) => {
     return {
         type: batchDetails.GET_BATCH_RESULT,
-        payload: payload.data
+        payload: payload
     }
 }
 
@@ -37,16 +46,20 @@ export const addStudentResult = (payload: any) => {
         payload: payload.data
     }
 }
-export const addBatch = () => {
+export const addBatch = (params: addbatch) => {
     return {
-        type: batchDetails.ADD_BATCH_TRIGGER
+        type: batchDetails.ADD_BATCH_TRIGGER,
+        params
     }
 }
 
 export const addBatchResult = (payload: any) => {
+    setTimeout(() => {
+        store.dispatch(clearError());
+    }, 5000);
     return {
         type: batchDetails.ADD_BATCH_RESULT,
-        payload: payload.data
+        payload: payload
     }
 }
 
@@ -57,6 +70,9 @@ export const clearError = () => {
 }
 
 export const setError = (payload: {status: boolean, message: String}) => {
+    setTimeout(() => {
+        store.dispatch(clearError());
+    }, 5000);
     return {
         type: batchDetails.LOG_ERROR,
         payload: payload.message

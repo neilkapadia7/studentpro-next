@@ -27,6 +27,7 @@ import {
         batch: [],
         students: [],
         currentBatchUsers: [],
+        successMessage: "",
     };
     
     const authReducer = (state = initialState, action: action) => {
@@ -63,11 +64,13 @@ import {
                     isError: false,
                 }
             case ADD_BATCH_RESULT:
+                console.log("ACTION PAYLOAD -> ", action.payload, " initialState.batch -> ", initialState.batch,  " batch -> ", batch);
                 return {
                     ...state,
                     isLoading: false,
                     isError: false,
-                    batch: [...initialState.batch, action.payload]
+                    batch: state.batch.length > 0 ? [...state.batch, action.payload] : [action.payload],
+                    successMessage: `Batch - ${action.payload.name || "-"} Added Succesfully`
                 }
             case GET_BATCH_TRIGGER:
                 return {
@@ -88,6 +91,7 @@ import {
                     ...state,
                     isError: false,
                     errorMessage: "",
+                    successMessage: ""
                 };
             case LOG_ERROR:
                 return {
