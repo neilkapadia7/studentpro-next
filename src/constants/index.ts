@@ -33,6 +33,5 @@ else {
 
 }
 
-console.log("API_LINK ->", API_LINK);
 
 export const API_URL = API_LINK;

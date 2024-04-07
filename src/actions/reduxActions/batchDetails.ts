@@ -9,6 +9,13 @@ type addbatch = {
   }
   
 
+interface addStudent {
+    name: String,
+    email: String,
+    currentBatch: String,
+    userId?: String,
+}
+
 export const getAllStudents = () => {
     return {
         type: batchDetails.GET_STUDENTS_TRIGGER
@@ -18,7 +25,7 @@ export const getAllStudents = () => {
 export const getAllStudentsResult = (payload: any) => {
     return {
         type: batchDetails.GET_STUDENTS_RESULT,
-        payload: payload.data
+        payload: payload
     }
 }
 export const getAllBatch = () => {
@@ -34,16 +41,17 @@ export const getAllBatchResult = (payload: any) => {
     }
 }
 
-export const addStudent = () => {
+export const addStudent = (params: addStudent) => {
     return {
-        type: batchDetails.ADD_STUDENTS_TRIGGER
+        type: batchDetails.ADD_STUDENTS_TRIGGER,
+        params
     }
 }
 
 export const addStudentResult = (payload: any) => {
     return {
         type: batchDetails.ADD_STUDENTS_RESULT,
-        payload: payload.data
+        payload: payload
     }
 }
 export const addBatch = (params: addbatch) => {

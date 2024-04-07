@@ -22,8 +22,14 @@ import { toast } from '@/components/ui/use-toast';
 import { updateInstituteDetails } from '@/actions/reduxActions/institute';
 import Loading from '@/components/layouts/Loading';
 import DashboardCards from '@/components/layouts/DashboardCards';
-import { getAllBatch, getAllStudents, addBatch } from '@/actions/reduxActions/batchDetails';
+import { getAllBatch, getAllStudents, addBatch, addStudent } from '@/actions/reduxActions/batchDetails';
 
+interface addStudent {
+    name: String,
+    email: String,
+    currentBatch: String,
+    userId?: String,
+}
 
 const Home = () => {
     const auth = useSelector((state: RootState) => state.auth);
@@ -44,7 +50,7 @@ const Home = () => {
         if(auth.instituteId) {
             setLoading(true);
             dispatch(getAllBatch());
-            // dispatch(getAllBatch());
+            dispatch(getAllStudents());
         }
     }, [auth.loggedIn]);
 
@@ -79,8 +85,15 @@ const Home = () => {
         }
     }
     
+    async function saveStudent(params: addStudent) {
+        dispatch(addStudent(params));
+    }
+    
+    async function saveUser(params:any) {
+        
+    }
 
-    async function saveBatch(name?: string) {
+    async function saveBatch({name}: {name?: string}) {
         if(name) {
             batchName = name;
             setbatchName(name);
@@ -226,7 +239,7 @@ const Home = () => {
                                     </div>
                                     <DialogFooter>
                                         <DialogClose asChild>
-                                            <Button onClick={() => saveBatch()}>
+                                            <Button onClick={() => saveBatch({})}>
                                                 Save changes
                                             </Button>
                                         </ DialogClose>
@@ -246,7 +259,7 @@ const Home = () => {
                 <h1 className="font-bold text-3xl mb-10">
                     Welcome, {auth.instituteDetails.name || auth.name}!
                 </h1>
-                <DashboardCards batches={batchDetails.batch} students={batchDetails.batch} users={batchDetails.batch} addBatch={saveBatch}/>
+                <DashboardCards batches={batchDetails.batch} students={batchDetails.students} users={batchDetails.batch} addBatch={saveBatch} addStudent={saveStudent} addUser={saveUser}/>
             </>
         }
         </>

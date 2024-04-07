@@ -39,10 +39,14 @@ import {
                     isError: false,
                 }
             case ADD_STUDENTS_RESULT:
+                console.log("REDUCER -> ", action.payload);
+                
                 return {
+                    ...state,
                     isLoading: false,
                     isError: false,
-                    students: [...initialState.students, action.payload]
+                    students: state.students.length > 0 ? [...state.students, action.payload] : [action.payload],
+                    successMessage: `Student - ${action.payload.name || "-"} Added Succesfully`
                 }
             case GET_STUDENTS_TRIGGER:
                 return {
@@ -55,7 +59,7 @@ import {
                     ...state,
                     isLoading: false,
                     isError: false,
-                    students: action.payload
+                    students: [...action.payload]
                 }
             case ADD_BATCH_TRIGGER:
                 return {
@@ -64,7 +68,6 @@ import {
                     isError: false,
                 }
             case ADD_BATCH_RESULT:
-                console.log("ACTION PAYLOAD -> ", action.payload, " initialState.batch -> ", initialState.batch,  " batch -> ", batch);
                 return {
                     ...state,
                     isLoading: false,

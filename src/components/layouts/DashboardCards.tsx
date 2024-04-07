@@ -14,13 +14,10 @@ import DashboardTableModal from "./authentication/DashboardTableModal";
 type batch = Array<{createdAt: Date, name: string, userId: string, _id: string}>;
 
 const DashboardCards = (
-        {batches, students, users, addBatch}
-        : {batches: batch, students: Array<object>, users: Array<object>, addBatch: Function}
+        {batches, students, users, addBatch, addStudent, addUser}
+        : {batches: batch, students: Array<object>, users: Array<object>, addUser: Function, addStudent: Function, addBatch: Function}
     ) => {
 
-    const addUser = async () => {
-        console.log("TRIGGERED");
-    }
 
   return (
     <>
@@ -35,7 +32,7 @@ const DashboardCards = (
                 </CardContent>
                 <CardFooter>
                     <div className="w-full">
-                        <DashboardInputModal buttonTitle="Add User" title="Add User" subtitle="Add User to your institute with the selected role" label="Name" triggerApi={addUser} placeholder="John Doe"/>
+                        <DashboardInputModal buttonTitle="Add User" title="Add User" subtitle="Add User to your institute with the selected role" label="Name" triggerApi={addUser} placeholder="John Doe" type="User"/>
                     </div>
                     <DashboardTableModal textTitle="View All Students" title="All Batches" data={batches} type="Student"/>
                     {/* <p className="text-right w-full text-sm underline cursor-pointer">View All Students</p> */}
@@ -52,7 +49,7 @@ const DashboardCards = (
                 </CardContent>
                 <CardFooter>
                     <div className="w-full">
-                        <DashboardInputModal buttonTitle="Add Batch" title="Add Batch" subtitle="Add a new Batch to your institute" label="Batch Name" triggerApi={addBatch} placeholder="STD-10 2020-21"/>
+                        <DashboardInputModal buttonTitle="Add Batch" title="Add Batch" subtitle="Add a new Batch to your institute" label="Batch Name" triggerApi={addBatch} placeholder="STD-10 2020-21" type="Batch"/>
                     </div>
                     {/* <p className="text-right w-full text-sm underline cursor-pointer" >View All Batches</p> */}
                     <DashboardTableModal textTitle="View All Batches" title="All Batches" data={batches} type="Batch"/>
@@ -65,11 +62,11 @@ const DashboardCards = (
                     <CardDescription>Total Students in Institute</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <p>200 Students</p>
+                    <p>{students.length} Students</p>
                 </CardContent>
                 <CardFooter>
                     <div className="w-full">
-                        <DashboardInputModal buttonTitle="Add Student" title="Add Student" subtitle="Add a new Student to a batch" label="Student Name" triggerApi={addUser} placeholder="John Doe"/>
+                        <DashboardInputModal buttonTitle="Add Student" title="Add Student" subtitle="Add a new Student to a batch" label="Student Name" triggerApi={addStudent} placeholder="John Doe" type="Student" batches={batches}/>
                     </div>
                     <p className="text-right w-full text-sm underline cursor-pointer">View All Students</p>
                 </CardFooter>

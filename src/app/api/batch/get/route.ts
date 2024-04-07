@@ -15,7 +15,6 @@ export async function POST(req: Request) {
     });
 
     if(checkBatchExists) {
-      console.log("NEW CREATED CHECKS ->", checkBatchExists);
       return NextResponse.json({message: "Batch Already Exists"},  { status: 400, }); // Respond with the created todo
     } else {
       console.log("NOT FOUND ->", checkBatchExists);

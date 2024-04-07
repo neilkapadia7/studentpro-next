@@ -13,7 +13,7 @@ interface addStudent {
     name: String,
     email: String,
     currentBatch: String,
-    userId: String,
+    userId?: String,
 }
 
 export async function getAllStudents() {

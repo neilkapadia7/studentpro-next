@@ -99,7 +99,6 @@ function* userSignUpSaga(param: any): Generator<any> {
   try {
     const response:any = yield call(authService.signup, param.payload);
     if (response.status === 200) {
-      console.log("GET DATA -> ", response.data);
         localStorage.setItem('token', response.data.token)
         // yield put(authAction.getUserDetails(response.data.data._id));
         payload = {

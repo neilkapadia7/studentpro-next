@@ -23,6 +23,12 @@ type addbatch = {
   coursePrice?: Number,
 }
 
+interface addStudent {
+  name: String,
+  email: String,
+  currentBatch: String,
+  userId?: String,
+}
 
 
 function* getAllStudentsSaga(param: any): Generator<any> {
@@ -97,11 +103,39 @@ function* addBatchSaga({params}: {params: addbatch}): Generator<any> {
     }
   }
 
+
+function* addStudentSaga({params}: {params: addStudent}): Generator<any> {
+    let payload = {
+      status: false,
+      message: "Could not fetch data",
+    };
+    try {
+
+      const getUserData:any = yield call(studentService.addStudent, params);
+      
+      if (getUserData.status === 200) {
+        yield put(batchDetailsActions.addStudentResult(getUserData.data.data));
+      } else {
+        payload.message = getUserData.response.data.message || getUserData.message;
+        console.log("ERROR addStudentSaga -> ", getUserData.response.data.message);
+        yield put(batchDetailsActions.setError({...payload}));
+      }
+  
+    } catch (error: any) {
+      console.log("ERROR addStudentSaga -> ", error);
+      payload = {
+        ...payload,
+        message: error.message || error.response.message,
+      };
+      yield put(batchDetailsActions.setError({...payload}));
+    }
+  }
+
 export default function* actionWatcher() {
   yield all([
     takeLatest(constants.GET_STUDENTS_TRIGGER, getAllStudentsSaga),
     takeLatest(constants.GET_BATCH_TRIGGER, getAllBatchSaga),
-    // takeLatest(constants.ADD_STUDENTS_TRIGGER, addStudentSaga),
+    takeLatest(constants.ADD_STUDENTS_TRIGGER, addStudentSaga),
     takeLatest(constants.ADD_BATCH_TRIGGER, addBatchSaga),
   ]);
 }
