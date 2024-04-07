@@ -167,7 +167,7 @@ const Home = () => {
     return (
         <>
         {loading ? <Loading />
-        : domLoaded && !batchDetails.batch  &&
+        : domLoaded && (!batchDetails.batch || !batchDetails.batch[0])  &&
             <div>
                 {!auth.instituteId ?
                     <div className="text-center justify-center pt-32">

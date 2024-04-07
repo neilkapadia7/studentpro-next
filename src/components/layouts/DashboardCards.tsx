@@ -9,10 +9,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress"
 import DashboardInputModal from "./DashboardInputModal";
+import DashboardTableModal from "./authentication/DashboardTableModal";
+
+type batch = Array<{createdAt: Date, name: string, userId: string, _id: string}>;
 
 const DashboardCards = (
         {batches, students, users, addBatch}
-        : {batches: Array<object>, students: Array<object>, users: Array<object>, addBatch: Function}
+        : {batches: batch, students: Array<object>, users: Array<object>, addBatch: Function}
     ) => {
 
     const addUser = async () => {
@@ -34,7 +37,8 @@ const DashboardCards = (
                     <div className="w-full">
                         <DashboardInputModal buttonTitle="Add User" title="Add User" subtitle="Add User to your institute with the selected role" label="Name" triggerApi={addUser} placeholder="John Doe"/>
                     </div>
-                    <p className="text-right w-full text-sm underline cursor-pointer">View All Students</p>
+                    <DashboardTableModal textTitle="View All Students" title="All Batches" data={batches} type="Student"/>
+                    {/* <p className="text-right w-full text-sm underline cursor-pointer">View All Students</p> */}
                 </CardFooter>
             </Card>
 
@@ -50,7 +54,8 @@ const DashboardCards = (
                     <div className="w-full">
                         <DashboardInputModal buttonTitle="Add Batch" title="Add Batch" subtitle="Add a new Batch to your institute" label="Batch Name" triggerApi={addBatch} placeholder="STD-10 2020-21"/>
                     </div>
-                    <p className="text-right w-full text-sm underline cursor-pointer">View All Batches</p>
+                    {/* <p className="text-right w-full text-sm underline cursor-pointer" >View All Batches</p> */}
+                    <DashboardTableModal textTitle="View All Batches" title="All Batches" data={batches} type="Batch"/>
                 </CardFooter>
             </Card>
             
