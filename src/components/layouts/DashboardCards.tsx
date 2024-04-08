@@ -35,7 +35,7 @@ const DashboardCards = (
                     <div className="w-full">
                         <DashboardInputModal buttonTitle="Add User" title="Add User" subtitle="Add User to your institute with the selected role" label="Name" triggerApi={addUser} placeholder="John Doe" batches={batches} type="User"/>
                     </div>
-                    <DashboardTableModal textTitle="View All Users" title="All Batches" data={batches} type="Student"/>
+                    <DashboardTableModal textTitle="View All Users" title="All Users" data={users} type="User"/>
                     {/* <p className="text-right w-full text-sm underline cursor-pointer">View All Students</p> */}
                 </CardFooter>
             </Card>
