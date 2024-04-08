@@ -9,6 +9,7 @@ import { Metadata } from "next";
 // import NavbarShad from "@/components/layouts/NavbarShad";
 import Navbar from "@/components/layouts/navbar";
 import ToastMessage from "@/components/layouts/toastMessage";
+import Loader from "./Loader";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,9 +32,11 @@ export default function RootLayout({
             <body className={inter.className}>
               <Toaster />
               <ToastMessage />
-              <Navbar >
-                {children}
-              </Navbar>
+              <Loader>
+                <Navbar >
+                  {children}
+                </Navbar>
+              </Loader>
             </body>
           </html>
         </ProtectedRoute>

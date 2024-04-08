@@ -105,6 +105,9 @@ export default function Navbar ({children}: Readonly<{children: React.ReactNode}
 							<Link href='/home'>Home</Link>
 						</li>
 						<li>
+							<Link href='/users'>Users</Link>
+						</li>
+						<li>
 							<Link href='/'>Syllabus</Link>
 						</li>
 						<li>
