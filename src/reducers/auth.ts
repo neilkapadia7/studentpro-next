@@ -100,7 +100,7 @@ import * as ACTION from '../constants/actionTypes/institute';
                 accessType: action.payload.accessType,
                 isActive: action.payload.isActive,
                 isAdminUser: action.payload.isAdminUser,
-                isInstituteAccess: action.payload.instituteId ? true : false,
+                isInstituteAccess: action.payload.accessType === "InstituteAdmin" ? true : false,
                 instituteId: action.payload.instituteId?._id,
                 instituteDetails: action.payload.instituteId || {}
             }

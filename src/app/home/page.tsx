@@ -22,7 +22,7 @@ import { toast } from '@/components/ui/use-toast';
 import { updateInstituteDetails } from '@/actions/reduxActions/institute';
 import Loading from '@/components/layouts/Loading';
 import DashboardCards from '@/components/layouts/DashboardCards';
-import { getAllBatch, getAllStudents, addBatch, addStudent } from '@/actions/reduxActions/batchDetails';
+import { getAllBatch, getAllStudents, addBatch, addStudent, addInstituteUser, getAllInstituteUsers } from '@/actions/reduxActions/batchDetails';
 
 interface addStudent {
     name: String,
@@ -30,6 +30,17 @@ interface addStudent {
     currentBatch: String,
     userId?: String,
 }
+
+
+type addNewUserType = {
+    name: string,
+    email: string,
+    password: string
+    instituteId?: string,
+    isManualUserGeneration?: boolean, 
+    accessType: "Instructor" | "InstituteAdmin" | "BatchAdmin"
+    batchId: string
+  }
 
 const Home = () => {
     const auth = useSelector((state: RootState) => state.auth);
@@ -51,6 +62,7 @@ const Home = () => {
             setLoading(true);
             dispatch(getAllBatch());
             dispatch(getAllStudents());
+            dispatch(getAllInstituteUsers());
         }
     }, [auth.loggedIn]);
 
@@ -89,8 +101,9 @@ const Home = () => {
         dispatch(addStudent(params));
     }
     
-    async function saveUser(params:any) {
-        
+    async function saveUser(params:addNewUserType) {
+        params.instituteId = auth.instituteId;
+        dispatch(addInstituteUser(params));
     }
 
     async function saveBatch({name}: {name?: string}) {
@@ -259,7 +272,7 @@ const Home = () => {
                 <h1 className="font-bold text-3xl mb-10">
                     Welcome, {auth.instituteDetails.name || auth.name}!
                 </h1>
-                <DashboardCards batches={batchDetails.batch} students={batchDetails.students} users={batchDetails.batch} addBatch={saveBatch} addStudent={saveStudent} addUser={saveUser}/>
+                <DashboardCards batches={batchDetails.batch} students={batchDetails.students} users={batchDetails.users} addBatch={saveBatch} addStudent={saveStudent} addUser={saveUser}/>
             </>
         }
         </>

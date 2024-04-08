@@ -16,6 +16,17 @@ interface addStudent {
     userId?: String,
 }
 
+
+type addNewUserType = {
+    name: string,
+    email: string,
+    password: string
+    instituteId?: string,
+    isManualUserGeneration?: boolean, 
+    accessType: "Instructor" | "InstituteAdmin" | "BatchAdmin"
+    batchId: string
+  }
+
 export const getAllStudents = () => {
     return {
         type: batchDetails.GET_STUDENTS_TRIGGER
@@ -67,6 +78,34 @@ export const addBatchResult = (payload: any) => {
     }, 5000);
     return {
         type: batchDetails.ADD_BATCH_RESULT,
+        payload: payload
+    }
+}
+
+
+export const getAllInstituteUsers = () => {
+    return {
+        type: batchDetails.GET_INSTITUTE_USERS_TRIGGER
+    }
+}
+
+export const getAllInstituteUsersResult = (payload: any) => {
+    return {
+        type: batchDetails.GET_INSTITUTE_USERS_RESULT,
+        payload: payload
+    }
+}
+
+export const addInstituteUser = (params: addNewUserType) => {
+    return {
+        type: batchDetails.ADD_INSTITUTE_USER_TRIGGER,
+        params
+    }
+}
+
+export const addInstituteUserResult = (payload: any) => {
+    return {
+        type: batchDetails.ADD_INSTITUTE_USER_RESULT,
         payload: payload
     }
 }

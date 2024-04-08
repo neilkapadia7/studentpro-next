@@ -19,7 +19,6 @@ export const Institute = () => {
         setloading(true);
         let res = await getAllInstitute({});
         if(res.status == 200) {
-          console.log("Res.data", res.data);
           setInstitutes(res.data.data);
         }
         setloading(false);

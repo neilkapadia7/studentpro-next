@@ -8,8 +8,12 @@ import {
     ADD_BATCH_RESULT,
     GET_BATCH_TRIGGER,
     GET_BATCH_RESULT,
+    GET_INSTITUTE_USERS_TRIGGER,
+    GET_INSTITUTE_USERS_RESULT,
+    ADD_INSTITUTE_USER_TRIGGER,
+    ADD_INSTITUTE_USER_RESULT,
     CLEAR_ERROR,
-    LOG_ERROR
+    LOG_ERROR,
 } from "../constants/actionTypes/batchDetails";
 
 // import * as ACTION from '../constants/actionTypes/institute';
@@ -28,6 +32,7 @@ import {
         students: [],
         currentBatchUsers: [],
         successMessage: "",
+        users: []
     };
     
     const authReducer = (state = initialState, action: action) => {
@@ -88,7 +93,33 @@ import {
                     isError: false,
                     batch: action.payload
                 }
-            
+            case GET_INSTITUTE_USERS_TRIGGER:
+                return {
+                    ...state,
+                    isLoading: true,
+                    isError: false,
+                }
+            case GET_INSTITUTE_USERS_RESULT:
+                return {
+                    ...state,
+                    isLoading: false,
+                    isError: false,
+                    users: [...action.payload]
+                }
+            case ADD_INSTITUTE_USER_TRIGGER:
+                return {
+                    ...state,
+                    isLoading: true,
+                    isError: false,
+                }
+            case ADD_INSTITUTE_USER_RESULT:
+                return {
+                    ...state,
+                    isLoading: false,
+                    isError: false,
+                    users: state.users.length > 0 ? [...state.users, action.payload] : [action.payload],
+                    successMessage: `User - ${action.payload.name || "-"} Added Succesfully`
+                }
             case CLEAR_ERROR:
                 return {
                     ...state,

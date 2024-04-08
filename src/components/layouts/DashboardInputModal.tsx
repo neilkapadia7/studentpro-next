@@ -31,6 +31,8 @@ export default function DashboardInputModal({buttonTitle, title, subtitle, label
     const {toast} = useToast();
     const [text, setText] = useState("");
     const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [accessType, setAccessType] = useState("");
     const [currentBatch, setCurrentBatch] = useState("");
 
     async function performAction() {
@@ -54,10 +56,37 @@ export default function DashboardInputModal({buttonTitle, title, subtitle, label
                 }
                 payload.email = email;
                 payload.currentBatch = currentBatch;
+            } 
+            if(type === "User") {
+                if(!email || !password || !accessType) {
+                    return toast({
+                        title: "Error",
+                        description: "Please add all fields",
+                        variant: "destructive"
+                    });
+                }
+
+                if(accessType == "BatchAdmin") {
+                    if(!currentBatch) {
+                        return toast({
+                            title: "Error",
+                            description: "Please add all fields",
+                            variant: "destructive"
+                        });
+                    }
+                    payload.batchId = currentBatch;
+                }
+
+                payload.email = email;
+                payload.password = password;
+                
+                payload.accessType = accessType;
             }
             await triggerApi(payload);
             setText("");
             setEmail("");
+            setPassword("");
+            setAccessType("");
             setCurrentBatch("");
         }
     }
@@ -88,19 +117,75 @@ export default function DashboardInputModal({buttonTitle, title, subtitle, label
                                 </Label>
                                 <Input type="email" id="name" value={email} placeholder="test@example.com" className="col-span-3" onChange={(e) => setEmail(e.target.value)}/>
 
-                                <Label htmlFor="name" className="text-right">
+                                <Label htmlFor="currentBatch" className="text-right">
                                     Batch
                                 </Label>
-                                <Select required={true} onValueChange={(str)=> setCurrentBatch(str)} value={currentBatch}>
-                                    <SelectTrigger className="w-[180px]">
-                                        <SelectValue placeholder="Select Batch" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {batches?.map(el => (
-                                            <SelectItem key={el._id} value={el._id}>{el.name}</SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
+                                <div className="col-span-3">
+                                    <Select required={true} onValueChange={(str)=> setCurrentBatch(str)} value={currentBatch}>
+                                        <SelectTrigger className="w-[180px]">
+                                            <SelectValue placeholder="Select Batch" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {batches?.map(el => (
+                                                <SelectItem key={el._id} value={el._id}>{el.name}</SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                            </>
+                        }
+
+                        {type === "User" &&
+                            <>
+                                <Label htmlFor="email" className="text-right">
+                                    Email
+                                </Label>
+                                <Input type="email" id="name" value={email} placeholder="test@example.com" className="col-span-3" onChange={(e) => setEmail(e.target.value)}/>
+                                
+                                <Label htmlFor="password" className="text-right">
+                                    Password
+                                </Label>
+                                <Input type="password" id="password" value={password} placeholder="*****" className="col-span-3" onChange={(e) => setPassword(e.target.value)}/>
+
+
+
+                                <Label htmlFor="accessType" className="text-right">
+                                    Access Type
+                                </Label>
+                                <div className="col-span-3">
+                                    <Select required={true} onValueChange={(str)=> setAccessType(str)} value={accessType}>
+                                        <SelectTrigger className="w-[180px]">
+                                            <SelectValue placeholder="Select Access Type" />
+                                        </SelectTrigger>
+                                        <SelectContent>    
+                                            <SelectItem key="InstituteAdmin" value="InstituteAdmin">InstituteAdmin</SelectItem>
+                                            <SelectItem key="Instructor" value="Instructor">Instructor</SelectItem>
+                                            <SelectItem key="BatchAdmin" value="BatchAdmin">BatchAdmin</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+
+                                {accessType == "BatchAdmin" && 
+                                    <>
+                                        <Label htmlFor="batchId" className="text-right">
+                                            Batch
+                                        </Label>
+
+                                        <div className="col-span-3">
+                                            <Select required={true} onValueChange={(str)=> setCurrentBatch(str)} value={currentBatch}>
+                                                <SelectTrigger className="w-[180px]">
+                                                    <SelectValue placeholder="Select Batch" />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    {batches?.map(el => (
+                                                        <SelectItem key={el._id} value={el._id}>{el.name}</SelectItem>
+                                                    ))}
+                                                </SelectContent>
+                                            </Select>
+                                        </div>
+                                    </>
+                                }
+                                
                             </>
                         }
                     </div>

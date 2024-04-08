@@ -11,11 +11,12 @@ import { Progress } from "@/components/ui/progress"
 import DashboardInputModal from "./DashboardInputModal";
 import DashboardTableModal from "./authentication/DashboardTableModal";
 
-type batch = Array<{createdAt: Date, name: string, userId: string, _id: string}>;
+type batchType = Array<{createdAt: Date, name: string, userId: string, _id: string}>;
+type studentType = Array<{email: string, createdAt: Date, name: string, userId: {name: string, _id: string}, _id: string, currentBatch?: {name: string}}>;
 
 const DashboardCards = (
         {batches, students, users, addBatch, addStudent, addUser}
-        : {batches: batch, students: Array<object>, users: Array<object>, addUser: Function, addStudent: Function, addBatch: Function}
+        : {batches: batchType, students:studentType, users: Array<object>, addUser: Function, addStudent: Function, addBatch: Function}
     ) => {
 
 
@@ -28,13 +29,13 @@ const DashboardCards = (
                     <CardDescription>Total User in Institute</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <p>20 Users</p>
+                    <p>{users.length} Users</p>
                 </CardContent>
                 <CardFooter>
                     <div className="w-full">
-                        <DashboardInputModal buttonTitle="Add User" title="Add User" subtitle="Add User to your institute with the selected role" label="Name" triggerApi={addUser} placeholder="John Doe" type="User"/>
+                        <DashboardInputModal buttonTitle="Add User" title="Add User" subtitle="Add User to your institute with the selected role" label="Name" triggerApi={addUser} placeholder="John Doe" batches={batches} type="User"/>
                     </div>
-                    <DashboardTableModal textTitle="View All Students" title="All Batches" data={batches} type="Student"/>
+                    <DashboardTableModal textTitle="View All Users" title="All Batches" data={batches} type="Student"/>
                     {/* <p className="text-right w-full text-sm underline cursor-pointer">View All Students</p> */}
                 </CardFooter>
             </Card>
@@ -68,7 +69,7 @@ const DashboardCards = (
                     <div className="w-full">
                         <DashboardInputModal buttonTitle="Add Student" title="Add Student" subtitle="Add a new Student to a batch" label="Student Name" triggerApi={addStudent} placeholder="John Doe" type="Student" batches={batches}/>
                     </div>
-                    <p className="text-right w-full text-sm underline cursor-pointer">View All Students</p>
+                    <DashboardTableModal textTitle="View All Students" title="All Students" data={students} type="Student"/>
                 </CardFooter>
             </Card>
         </div>

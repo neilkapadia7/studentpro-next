@@ -58,23 +58,6 @@ export default function Navbar ({children}: Readonly<{children: React.ReactNode}
 		// logout();
 	};
 
-	// const authLinks = (
-	// 	<Fragment>
-	// 		<li>
-	// 			<Link href='/home'>Home</Link>
-	// 		</li>
-	// 		<li>
-	// 			<Link href='/about'>About</Link>
-	// 		</li>
-	// 		<li>
-	// 			<Link href='/cart'>Cart</Link>
-	// 		</li>
-	// 		<li>
-	// 			<a onClick={Logout}>Logout</a>
-	// 		</li>
-	// 	</Fragment>
-	// );
-
 	const links = (
 		<Fragment>
 			<input className="menu-btn" type="checkbox" id="menu-btn"/>
@@ -122,10 +105,10 @@ export default function Navbar ({children}: Readonly<{children: React.ReactNode}
 							<Link href='/home'>Home</Link>
 						</li>
 						<li>
-							<Link href='/'>About</Link>
+							<Link href='/'>Syllabus</Link>
 						</li>
 						<li>
-							<Link href='/'>Contact</Link>
+							<Link href='/'>Manage Users</Link>
 						</li>
 						<li>
 							<Link onClick={Logout} href='/login'>Logout</Link>
