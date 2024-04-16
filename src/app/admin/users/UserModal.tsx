@@ -10,10 +10,12 @@ import {
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { updateUserAccess } from "@/services/admin";
+import { useDispatch } from "react-redux";
 
 
-export default function UserModal({modal, variant, row, loggedInUserId, getUserData} : {modal?: boolean, variant?: any, row: any, loggedInUserId: string, getUserData: Function}) {
+export default function UserModal({modal, variant, row, loggedInUserId, getUserData, isUser} : {modal?: boolean, variant?: any, row: any, loggedInUserId: string, getUserData: Function, isUser?: boolean}) {
     const {toast} = useToast();
+    const dispatch = useDispatch();
 
     async function deactiveUser() {
         if(loggedInUserId == row._id) {
@@ -33,7 +35,11 @@ export default function UserModal({modal, variant, row, loggedInUserId, getUserD
                     title: "Success",
                     description: "User Deactivated!"
                 });
-                getUserData(); 
+                if(isUser) {
+                    dispatch(getUserData()); 
+                } else {
+                    getUserData(); 
+                }
             }
                
         }
